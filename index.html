@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Аватар Фест — 14 августа, полная сборка страницы (код 1:1 с сайта)</title>
+<link rel="stylesheet" href="https://avatarfest.ru/styles.css">
+<style>
+body { margin: 0; background: #000; }
+
+/* Реальный .reveal ждёт JS (IntersectionObserver из script.js) для показа блока.
+   Форсируем видимость, чтобы всё было видно сразу в этой сборке. */
+.reveal { opacity: 1 !important; transform: none !important; }
+
+/* ---- Блок 1: Главный экран — новые элементы (цена, соцсети, тизер) ---- */
+.hero__price-line { margin-top: 18px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.hero__price-line .price-main { color: #ffffff; font-weight: 700; font-size: clamp(16px, 2vw, 20px); letter-spacing: 0.04em; }
+.hero__price-line .price-sub { font-family: "Etude Noire", sans-serif; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+.hero__social-corner { position: absolute; top: 20px; right: 20px; z-index: 5; }
+.hero__social-corner .footer__link { width: 68px; height: 68px; }
+.hero__social-corner .footer__link svg { width: 36px; height: 36px; }
+.hero__social-corner .footer__link:last-child { margin-left: -34px; }
+.hero__tagline { font-family: "Etude Noire", sans-serif; font-size: clamp(14px, 1.6vw, 17px); line-height: 1.6; color: rgba(255,255,255,0.72); max-width: 560px; margin: 18px auto 0; text-align: center; }
+@media (max-width: 920px) {
+  .hero__price-line { margin-top: 14px; }
+  .hero__tagline { margin-top: 14px; }
+}
+@media (max-width: 760px) {
+  .hero__social-corner { top: 14px; right: 14px; }
+  .hero__social-corner .footer__link { width: 44px; height: 44px; }
+  .hero__social-corner .footer__link svg { width: 24px; height: 24px; }
+  .hero__social-corner .footer__link:last-child { margin-left: -18px; }
+  .hero__tagline { font-size: 13px; line-height: 1.5; padding: 0 12px; }
+  .hero__price-line .price-main { font-size: 15px; }
+  .hero__price-line .price-sub { font-size: 10.5px; }
+}
+
+/* ---- Блок 2: Что вас ждёт — было 4 пункта в ряд, оставили 3, центрируем ---- */
+.tezis-list { grid-template-columns: repeat(3, 1fr) !important; max-width: 960px; margin-left: auto !important; margin-right: auto !important; }
+@media (max-width: 1100px) {
+  .tezis-list { grid-template-columns: repeat(2, 1fr) !important; max-width: 640px; }
+}
+
+/* ---- Блок 7: Купить билет — было 2 колонки под 2 даты, осталась 1, центрируем ---- */
+.ya-widgets-wrap { display: flex !important; justify-content: center !important; }
+.ya-widgets-wrap .ticket-row { width: 100%; max-width: 480px; margin-bottom: 0; }
+.ticket-row__date, .ticket-row__venue { white-space: nowrap; }
+
+/* ---- Единый размер и шрифт заголовков блоков (как «Галерея») ---- */
+.tezis-title,
+.schedule__title,
+.story-cards__title,
+.section-title--tickets,
+.section-title--tiers,
+.concept-title {
+  font-family: "TorukSC", sans-serif !important;
+  font-size: clamp(2rem, 5vw, 3.5rem) !important;
+  letter-spacing: 0.06em !important;
+}
+/* Бегущая строка «Лайн-ап» теперь служит заголовком блока — уменьшаем
+   до размера остальных заголовков (было clamp(56px,5.5vw,84px)). */
+.artists-ticker__track span {
+  font-size: clamp(2rem, 5vw, 3.5rem) !important;
+}
+.artists-ticker {
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+/* ---- Единый отступ между блоками — как между «Расписание» и «Как это будет?»
+   (80px низ предыдущего блока + 80px верх следующего = 160px). Внутренние
+   отступы заголовок→контент внутри одного блока (напр. «Концепция»→фото)
+   не трогаем — это не граница между блоками. ---- */
+.section--tezis      { padding-top: 80px !important; padding-bottom: 80px !important; }
+.section--artists    { padding-top: 80px !important; padding-bottom: 80px !important; }
+.section--schedule   { padding-top: 80px !important; padding-bottom: 80px !important; }
+.section--story-cards{ padding-top: 80px !important; padding-bottom: 80px !important; }
+.section--tiers      { padding-top: 80px !important; padding-bottom: 80px !important; }
+.section--tickets    { padding-top: 80px !important; padding-bottom: 80px !important; }
+.section--concept    { padding-top: 80px !important; }
+.section--story      { padding-bottom: 80px !important; }
+.section--gallery    { padding-top: 80px !important; }
+
+/* Атрибуция шрифта Etude Noire (CC BY 4.0, автор Dimitri Antonov) — обязательное
+   требование лицензии, размещаем мелким текстом в подвале. */
+.footer__font-credit {
+  text-align: center;
+  font-size: 7px;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.35);
+  margin-top: 8px;
+  padding: 0 24px 16px;
+}
+.footer__font-credit a { color: rgba(255,255,255,0.5); }
+
+/* Отступ заголовок→контент одинаковый у блоков «Купить билет», «Категории билетов»,
+   «Концепция» и «Галерея» (было 34/40/32/40px — приводим к единому значению). */
+.section-title--tickets,
+.section-title--tiers,
+.concept-title,
+.section-title--gallery {
+  margin-bottom: 40px !important;
+}
+/* «Концепция» и «Программа/фото» — разные секции сайта (с собственными
+   padding между ними), обнуляем их, чтобы отступ шёл только за счёт
+   margin-bottom заголовка выше — как в остальных трёх блоках. */
+.section--concept { padding-bottom: 0 !important; }
+.section--story    { padding-top: 0 !important; }
+</style>
+</head>
+<body>
+
+<main>
+
+<!-- ============ 1. ГЛАВНЫЙ ЭКРАН ============ -->
+<section class="hero" aria-label="Главный экран">
+  <div class="hero__photo" id="hero-bg" aria-hidden="true"></div>
+  <div class="hero__social-corner footer__social">
+    <a class="footer__link" href="https://t.me/portalshow2026" target="_blank" rel="noopener" aria-label="Telegram">
+      <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 13.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z"/></svg>
+    </a>
+    <a class="footer__link" href="https://vk.com/portalshow2026" target="_blank" rel="noopener" aria-label="ВКонтакте">
+      <svg viewBox="0 0 24 24"><path d="M12.785 16.241s.288-.032.436-.194c.136-.148.132-.427.132-.427s-.02-1.304.585-1.496c.598-.19 1.365 1.26 2.179 1.818.615.422 1.082.33 1.082.33l2.172-.03s1.136-.07.597-1.084c-.044-.078-.314-.666-1.617-1.883-1.362-1.271-1.18-1.065.46-3.263.998-1.333 1.397-2.147 1.272-2.495-.12-.332-.855-.244-.855-.244l-2.44.015s-.181-.025-.315.059c-.132.082-.216.272-.216.272s-.387 1.03-.903 1.906c-1.088 1.85-1.524 1.948-1.703 1.834-.414-.268-.31-1.077-.31-1.652 0-1.797.272-2.546-.528-2.743-.265-.064-.46-.106-1.138-.113-.869-.01-1.605.003-2.02.206-.277.136-.49.44-.36.457.161.021.525.098.718.362.248.341.239 1.107.239 1.107s.142 2.116-.332 2.378c-.325.18-.771-.187-1.728-1.866-.49-.848-.861-1.786-.861-1.786s-.071-.184-.2-.284c-.156-.12-.373-.158-.373-.158l-2.317.015s-.348.01-.475.161c-.113.135-.009.414-.009.414s1.813 4.238 3.864 6.376c1.882 1.958 4.022 1.83 4.022 1.83z"/></svg>
+    </a>
+  </div>
+  <div class="hero__caption" id="hero-text">
+    <div class="hero__content">
+      <p class="hero__eyebrow">Музыкальный фестиваль</p>
+      <h1 class="hero__avatar-title">
+        <img class="hero__avatar-img" src="https://avatarfest.ru/assets/abatap.png" alt="Аватар — музыкальный фестиваль и ночное шоу в Москве" />
+        <span class="visually-hidden">Портал Шоу: Аватар — музыкальный фестиваль и ночное шоу в Москве</span>
+      </h1>
+      <p class="hero__tagline">Танцевальное погружение<br>Яркое событие этого лета<br>Последняя дата в сезоне</p>
+      <div class="hero__dates">
+        <div class="hero__date-row">
+          <span class="hero__date-city">Москва</span>
+          <span class="hero__date-sep hero__date-sep--line" aria-hidden="true"></span>
+          <span class="hero__date-day">14 августа</span>
+          <span class="hero__date-sep hero__date-sep--line" aria-hidden="true"></span>
+          <span class="hero__date-venue">BASE</span>
+        </div>
+      </div>
+      <div class="hero__countdown" id="heroCountdown">
+        <div class="hero__countdown-unit"><span class="hero__countdown-num" id="cdDays">--</span><span class="hero__countdown-label">дней</span></div>
+        <div class="hero__countdown-sep">:</div>
+        <div class="hero__countdown-unit"><span class="hero__countdown-num" id="cdHours">--</span><span class="hero__countdown-label">часов</span></div>
+        <div class="hero__countdown-sep">:</div>
+        <div class="hero__countdown-unit"><span class="hero__countdown-num" id="cdMins">--</span><span class="hero__countdown-label">минут</span></div>
+        <div class="hero__countdown-sep">:</div>
+        <div class="hero__countdown-unit"><span class="hero__countdown-num" id="cdSecs">--</span><span class="hero__countdown-label">секунд</span></div>
+      </div>
+      <div class="hero__price-line">
+        <span class="price-main">Билеты от 1 500 ₽</span>
+        <span class="price-sub">Цены растут после 10 августа</span>
+      </div>
+      <div class="hero__actions">
+        <a class="hero__invite-btn" href="https://afisha.yandex.ru/moscow/concert/836308" target="_blank" rel="noopener" style="text-decoration:none;">Купить билет</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. ЧТО ВАС ЖДЁТ ============ -->
+<section class="section section--tezis" id="tezis">
+  <div class="section__inner">
+    <h2 class="tezis-title">Что вас ждёт?</h2>
+    <ul class="tezis-list tezis-list--nums">
+      <li class="tezis-item tezis-item--num"><span class="tezis-num">5</span><span class="tezis-text">часов шоу-программы</span></li>
+      <li class="tezis-item tezis-item--num"><span class="tezis-num">3</span><span class="tezis-text">диджея</span></li>
+      <li class="tezis-item tezis-item--num"><span class="tezis-num">4</span><span class="tezis-text">акта истории</span></li>
+    </ul>
+    <ul class="tezis-list tezis-list--abstract">
+      <li class="tezis-item tezis-item--abstract"><span class="tezis-icon">✦</span><span class="tezis-text">Голос народов Нарви ведёт всю ночь</span></li>
+      <li class="tezis-item tezis-item--abstract"><span class="tezis-icon">✦</span><span class="tezis-text">Иммерсивная вечеринка всю ночь</span></li>
+      <li class="tezis-item tezis-item--abstract"><span class="tezis-icon">✦</span><span class="tezis-text">Масштабные декорации</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 3. ЛАЙН-АП ============ -->
+<div class="section section--artists">
+  <h2 class="visually-hidden">Лайн-ап: диджеи фестиваля 14 августа</h2>
+  <div class="artists-ticker" aria-hidden="true">
+    <div class="artists-ticker__track">
+      <span>ЛАЙН-АП</span><span>ЛАЙН-АП</span><span>ЛАЙН-АП</span><span>ЛАЙН-АП</span><span>ЛАЙН-АП</span>
+      <span>ЛАЙН-АП</span><span>ЛАЙН-АП</span><span>ЛАЙН-АП</span><span>ЛАЙН-АП</span><span>ЛАЙН-АП</span>
+    </div>
+  </div>
+  <div class="section__inner">
+    <div class="artists-grid">
+      <button class="artist-card" type="button">
+        <div class="artist-card__photo">
+          <svg viewBox="0 0 200 200" width="100%" height="100%" style="display:block;">
+            <defs>
+              <radialGradient id="mist1" cx="50%" cy="35%" r="70%"><stop offset="0%" stop-color="#123a8f" stop-opacity="0.35"/><stop offset="100%" stop-color="#123a8f" stop-opacity="0"/></radialGradient>
+              <filter id="glow1"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <rect x="0" y="0" width="200" height="200" fill="url(#mist1)"/>
+            <ellipse cx="100" cy="86" rx="34" ry="38" fill="#050a16"/>
+            <path d="M50 200 C50 140 70 118 100 118 C130 118 150 140 150 200 Z" fill="#050a16"/>
+            <ellipse cx="86" cy="82" rx="4.5" ry="3" fill="#8fc4ff" filter="url(#glow1)"/>
+            <ellipse cx="114" cy="82" rx="4.5" ry="3" fill="#8fc4ff" filter="url(#glow1)"/>
+          </svg>
+        </div>
+        <div class="artist-card__name-row"><span class="artist-card__name">Голос портала</span><span class="artist-card__badge">Инкогнито</span></div>
+      </button>
+      <button class="artist-card" type="button">
+        <div class="artist-card__photo"><img src="https://avatarfest.ru/assets/artist-vandeme.png" alt="VANDEME" /></div>
+        <div class="artist-card__name-row"><span class="artist-card__name">VANDEME</span></div>
+      </button>
+      <button class="artist-card" type="button">
+        <div class="artist-card__photo">
+          <svg viewBox="0 0 200 200" width="100%" height="100%" style="display:block;">
+            <defs>
+              <radialGradient id="mist2" cx="50%" cy="35%" r="70%"><stop offset="0%" stop-color="#123a8f" stop-opacity="0.35"/><stop offset="100%" stop-color="#123a8f" stop-opacity="0"/></radialGradient>
+              <filter id="glow2"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <rect x="0" y="0" width="200" height="200" fill="url(#mist2)"/>
+            <ellipse cx="100" cy="86" rx="34" ry="38" fill="#050a16"/>
+            <path d="M50 200 C50 140 70 118 100 118 C130 118 150 140 150 200 Z" fill="#050a16"/>
+            <ellipse cx="86" cy="82" rx="4.5" ry="3" fill="#ff9a5a" filter="url(#glow2)"/>
+            <ellipse cx="114" cy="82" rx="4.5" ry="3" fill="#ff9a5a" filter="url(#glow2)"/>
+          </svg>
+        </div>
+        <div class="artist-card__name-row"><span class="artist-card__name">Творец ночи</span><span class="artist-card__badge">Инкогнито</span></div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 4. РАСПИСАНИЕ ============ -->
+<section class="section section--schedule" id="schedule">
+  <div class="section__inner">
+    <h2 class="schedule__title">Расписание</h2>
+    <div class="sched-desktop">
+      <div class="sched-cols">
+        <div class="sched-col">
+          <div class="sched-col__info"><span class="sched-col__time">-30 мин до старта</span><strong class="sched-col__name">Открытие портала</strong></div>
+          <div class="sched-col__tags">
+            <span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-dj.png" alt="">Первые ноты</span>
+            <span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-dance.png" alt="">Пробуждение света</span>
+          </div>
+        </div>
+        <div class="sched-col">
+          <div class="sched-col__info"><span class="sched-col__time">00:30 – 01:30</span><strong class="sched-col__name">Голос портала</strong><span class="sched-col__act">Погружение</span></div>
+          <div class="sched-col__tags">
+            <span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-dj.png" alt="">Сет ночи</span>
+            <span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-vocal.png" alt="">Голос Нарви</span>
+            <span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-dance.png" alt="">Девы портала</span>
+          </div>
+        </div>
+        <div class="sched-col">
+          <div class="sched-col__info"><span class="sched-col__time">01:30 – 02:45</span><strong class="sched-col__name">Творец ночи</strong><span class="sched-col__act">Рождение мира</span></div>
+          <div class="sched-col__tags">
+            <span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-dj.png" alt="">Сет ночи</span>
+            <span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-acro.png" alt="">Танец Аватара</span>
+            <span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-dance.png" alt="">Девы портала</span>
+          </div>
+        </div>
+        <div class="sched-col">
+          <div class="sched-col__info"><span class="sched-col__time" style="color:#ff6b35;">02:45 – 04:00</span><strong class="sched-col__name">Великий дух</strong><span class="sched-col__act" style="color:#ff6b35;">Великий полёт</span></div>
+          <div class="sched-col__tags">
+            <span class="sched-tag sched-tag--headliner"><img src="https://avatarfest.ru/assets/sched-dj.png" alt="">Великий гость</span>
+            <span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-acro.png" alt="">Танец Аватара</span>
+            <span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-dance.png" alt="">Девы портала</span>
+          </div>
+        </div>
+        <div class="sched-col">
+          <div class="sched-col__info"><span class="sched-col__time">04:00 – 05:00</span><strong class="sched-col__name">Голос единения</strong><span class="sched-col__act">Связь</span></div>
+          <div class="sched-col__tags"><span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-dj.png" alt="">Финальный виток</span></div>
+        </div>
+      </div>
+      <div class="sched-wave-wrap" aria-hidden="true">
+        <svg viewBox="0 0 500 80" fill="none" preserveAspectRatio="none">
+          <path d="M50 42 C80 42 100 22 100 22 C120 22 140 58 150 58 C170 58 190 22 200 22 C220 22 240 58 250 58 C270 58 290 26 300 26 C320 26 340 15 350 15 C380 15 410 40 450 32" stroke="url(#wg)" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="50" cy="42" r="5" fill="#6a9fff"/><circle cx="150" cy="58" r="5" fill="#6a9fff"/><circle cx="250" cy="58" r="5" fill="#6a9fff"/><circle cx="350" cy="15" r="6" fill="#ff6b35"/><circle cx="450" cy="32" r="5" fill="#6a9fff"/>
+          <defs><linearGradient id="wg" x1="50" y1="40" x2="450" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#1848d8"/><stop offset="1" stop-color="#6a9fff"/></linearGradient></defs>
+        </svg>
+      </div>
+    </div>
+    <div class="sched-list">
+      <div class="sched-row">
+        <span class="sched-row__dot"></span><time class="sched-row__time">-30 мин</time><div class="sched-row__sep"></div>
+        <div class="sched-row__body"><strong class="sched-row__name">Открытие портала</strong></div>
+        <div class="sched-row__tags">
+          <span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-dj.png" alt="">Первые ноты</span>
+          <span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-dance.png" alt="">Пробуждение света</span>
+        </div>
+      </div>
+      <div class="sched-row">
+        <span class="sched-row__dot"></span><time class="sched-row__time">00:30 – 01:30</time><div class="sched-row__sep"></div>
+        <div class="sched-row__body"><strong class="sched-row__name">Голос портала</strong><span class="sched-row__act">Погружение</span></div>
+        <div class="sched-row__tags">
+          <span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-dj.png" alt="">Сет ночи</span>
+          <span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-vocal.png" alt="">Голос Нарви</span>
+          <span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-dance.png" alt="">Девы портала</span>
+        </div>
+      </div>
+      <div class="sched-row">
+        <span class="sched-row__dot"></span><time class="sched-row__time">01:30 – 02:45</time><div class="sched-row__sep"></div>
+        <div class="sched-row__body"><strong class="sched-row__name">Творец ночи</strong><span class="sched-row__act">Рождение мира</span></div>
+        <div class="sched-row__tags">
+          <span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-dj.png" alt="">Сет ночи</span>
+          <span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-acro.png" alt="">Танец Аватара</span>
+          <span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-dance.png" alt="">Девы портала</span>
+        </div>
+      </div>
+      <div class="sched-row">
+        <span class="sched-row__dot" style="background:#ff6b35;box-shadow:0 0 8px #ff6b35, 0 0 20px rgba(255,107,53,0.4);"></span>
+        <time class="sched-row__time" style="color:#ff6b35;">02:45 – 04:00</time><div class="sched-row__sep" style="background:rgba(255,107,53,0.3);"></div>
+        <div class="sched-row__body"><strong class="sched-row__name">Великий дух</strong><span class="sched-row__act" style="color:#ff6b35;">Великий полёт</span></div>
+        <div class="sched-row__tags">
+          <span class="sched-tag sched-tag--headliner"><img src="https://avatarfest.ru/assets/sched-dj.png" alt="">Великий гость</span>
+          <span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-acro.png" alt="">Танец Аватара</span>
+          <span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-dance.png" alt="">Девы портала</span>
+        </div>
+      </div>
+      <div class="sched-row">
+        <span class="sched-row__dot"></span><time class="sched-row__time">04:00 – 05:00</time><div class="sched-row__sep"></div>
+        <div class="sched-row__body"><strong class="sched-row__name">Голос единения</strong><span class="sched-row__act">Связь</span></div>
+        <div class="sched-row__tags"><span class="sched-tag"><img src="https://avatarfest.ru/assets/sched-dj.png" alt="">Финальный виток</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. КАК ЭТО БУДЕТ ============ -->
+<section class="section section--story-cards" id="story-cards">
+  <div class="section__inner">
+    <h2 class="story-cards__title reveal">Как это будет?</h2>
+    <p class="story-cards__subtitle reveal">Музыка, свет, декорации и перформансы становятся частью одной истории, которая постепенно развивается вокруг вас.</p>
+    <div class="story-cards__track">
+      <div class="story-card reveal">
+        <div class="story-card__img"><img src="https://avatarfest.ru/assets/sc-icon-2.png" alt="Посвящение" loading="lazy"></div>
+        <div class="story-card__body"><h3 class="story-card__name">Посвящение</h3><p class="story-card__desc">У входа звучит тихая музыка и приглушённый свет — портал уже открыт. Когда свет гаснет, голос народов Нарви вводит вас в историю, и появляется след Аватара.</p></div>
+      </div>
+      <div class="story-cards__connector story-cards__connector--1" aria-hidden="true"></div>
+      <div class="story-card reveal">
+        <div class="story-card__img"><img src="https://avatarfest.ru/assets/sc-icon-1.png" alt="Масштабные декорации" loading="lazy"></div>
+        <div class="story-card__body"><h3 class="story-card__name">Масштабные декорации</h3><p class="story-card__desc">Декорации меняются вместе с историей и вместе с духом зала: от первых элементов к кульминации.</p></div>
+      </div>
+      <div class="story-cards__connector story-cards__connector--2" aria-hidden="true"></div>
+      <div class="story-card reveal">
+        <div class="story-card__img"><img src="https://avatarfest.ru/assets/sc-icon-4.png" alt="Музыка как часть истории" loading="lazy"></div>
+        <div class="story-card__body"><h3 class="story-card__name">Музыка как часть истории</h3><p class="story-card__desc">Каждый диджей-сет — отдельный акт истории: от первого сета «Погружения» до кульминации «Великого полёта» и финального сета, закрывающего ночь.</p></div>
+      </div>
+      <div class="story-cards__connector story-cards__connector--3" aria-hidden="true"></div>
+      <div class="story-card reveal">
+        <div class="story-card__img"><img src="https://avatarfest.ru/assets/sc-icon-2.png" alt="Перформансы среди гостей" loading="lazy"></div>
+        <div class="story-card__body"><h3 class="story-card__name">Перформансы среди гостей</h3><p class="story-card__desc">Танцовщицы из мира Аватара находятся среди гостей, а между актами на сцене появляются танцевальные номера.</p></div>
+      </div>
+      <div class="story-cards__connector story-cards__connector--4" aria-hidden="true"></div>
+      <div class="story-card story-card--ritual reveal">
+        <div class="story-card__img"><img src="https://avatarfest.ru/assets/sc-icon-6.png" alt="Общий ритуал" loading="lazy"></div>
+        <div class="story-card__body"><h3 class="story-card__name">Общий ритуал</h3><p class="story-card__desc">Голос народов Нарви ведёт весь зал через четыре акта ночи — от «Погружения» до «Связи», превращая происходящее в общий ритуал, а не серию отдельных выступлений.</p></div>
+      </div>
+      <div class="story-cards__connector story-cards__connector--5" aria-hidden="true"></div>
+      <div class="story-card reveal">
+        <div class="story-card__img"><img src="https://avatarfest.ru/assets/sc-icon-5.png" alt="Единый транс" loading="lazy"></div>
+        <div class="story-card__body"><h3 class="story-card__name">Единый транс</h3><p class="story-card__desc">Кульминацией становится общий рейв, где вы, сцена и артисты объединяются в одном финальном переживании.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. КАТЕГОРИИ БИЛЕТОВ ============ -->
+<section class="section section--tiers" id="tiers">
+  <div class="section__inner">
+    <h2 class="section-title section-title--tiers">Категории билетов</h2>
+    <div class="tiers-wrap">
+      <div class="tiers-list" id="tiers-accordion">
+        <div class="tier-row">
+          <button class="tier-row__header" type="button" aria-expanded="false">
+            <span class="tier-row__name">ОХОТНИКИ</span>
+            <span class="tier-row__tag">Входной билет · 1 человек · 1 500 ₽ до 10 августа / 2 500 ₽ далее</span>
+            <span class="tier-row__icon" aria-hidden="true"></span>
+          </button>
+          <div class="tier-row__body"><p class="tier-item__desc">Доступ к танцполу, два бара на первом этаже, общий гардероб.</p></div>
+        </div>
+        <div class="tier-row">
+          <button class="tier-row__header" type="button" aria-expanded="false">
+            <span class="tier-row__name">ХРАНИТЕЛИ</span>
+            <span class="tier-row__tag">Стол · 4 человека · 2 500 ₽ до 10 августа / 3 000 ₽ далее</span>
+            <span class="tier-row__icon" aria-hidden="true"></span>
+          </button>
+          <div class="tier-row__body">
+            <div class="tier-row__body-inner">
+              <p class="tier-item__desc">Зона справа и слева от сцены на втором этаже. VIP-вход, 2 отдельных бара на втором этаже, гардероб и туалет на втором этаже, обслуживание официантами. Доступ к танцполу.</p>
+              <figure class="tier-item__photo"><img src="https://avatarfest.ru/assets/tier-khraniteli.jpg" alt="Зона Хранителей" /></figure>
+            </div>
+          </div>
+        </div>
+        <div class="tier-row">
+          <button class="tier-row__header" type="button" aria-expanded="false">
+            <span class="tier-row__name">ВСАДНИКИ</span>
+            <span class="tier-row__tag">Сидячий билет · 1 человек · цена уточняется</span>
+            <span class="tier-row__icon" aria-hidden="true"></span>
+          </button>
+          <div class="tier-row__body">
+            <div class="tier-row__body-inner">
+              <p class="tier-item__desc">Зона посередине напротив сцены на втором этаже, зона с двух сторон от сцены на втором этаже, зона слева от сцены на третьем этаже, зона на первом этаже справа от сцены. VIP-вход, 3 бара, гардероб и туалет на первом, втором и третьем этаже, обслуживание официантами. Доступ к танцполу.</p>
+              <figure class="tier-item__photo"><img src="https://avatarfest.ru/assets/tier-vsadniki.jpg" alt="Зона Всадников" /></figure>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. КУПИТЬ БИЛЕТ ============ -->
+<section class="section section--tickets" id="tickets">
+  <div class="section__inner">
+    <h2 class="section-title section-title--tickets">Купить билет</h2>
+    <div class="ya-widgets-wrap">
+      <div class="ticket-row">
+        <div class="ticket-row__info"><span class="ticket-row__date">14 августа</span><span class="ticket-row__venue">BASE · Москва</span></div>
+        <y:ticket data-session-id="ticketsteam-9871@64887576" data-template="yandex-button"></y:ticket>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. КОНЦЕПЦИЯ ============ -->
+<section class="section section--concept" id="concept">
+  <div class="section__inner">
+    <h2 class="concept-title">Концепция</h2>
+  </div>
+</section>
+<section class="section section--story" id="program">
+  <div class="section__inner">
+    <div class="story-grid">
+      <figure class="story-media story-media--large">
+        <img class="story-media__img" src="https://avatarfest.ru/assets/photo-concept-new.jpg" alt="Сцена шоу Аватар" />
+      </figure>
+      <div class="story-copy">
+        <p>«Портал Шоу «Аватар» — музыкальный фестиваль с полным погружением в мир Аватара. Это не концерт, на который приходят посмотреть со стороны, а ночь, где вы становитесь частью истории.</p>
+        <p>Голос народов Нарви ведёт вас через четыре акта: «Погружение», где на экране загорается след Аватара, «Рождение мира» с оживающими декорациями, кульминационный «Великий полёт» с хедлайнером и финальная «Связь», где сцена, артисты и гости объединяются в одном общем ритме.</p>
+        <p>Каждый диджей-сет — отдельный акт истории. Декорации меняются вместе с сюжетом, а танцовщицы и артисты находятся прямо среди гостей.»</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9. ГАЛЕРЕЯ (как на сайте, без изменений) ============ -->
+<section class="section section--gallery">
+  <div class="section__inner">
+    <h2 class="section-title section-title--gallery">Как это было в июле</h2>
+    <div class="gallery-grid">
+      <figure class="gallery-item"><img class="gallery-item__img" src="https://avatarfest.ru/assets/gallery-new-1.jpg" alt="Фото 1" /></figure>
+      <figure class="gallery-item"><img class="gallery-item__img" src="https://avatarfest.ru/assets/gallery-new-2.jpg" alt="Фото 2" /></figure>
+      <figure class="gallery-item"><img class="gallery-item__img" src="https://avatarfest.ru/assets/gallery-new-3.jpg" alt="Фото 3" /></figure>
+      <figure class="gallery-item"><img class="gallery-item__img" src="https://avatarfest.ru/assets/gallery-new-4.jpg" alt="Фото 4" /></figure>
+      <figure class="gallery-item"><img class="gallery-item__img" src="https://avatarfest.ru/assets/gallery-new-5.jpg" alt="Фото 5" /></figure>
+      <figure class="gallery-item"><img class="gallery-item__img" src="https://avatarfest.ru/assets/gallery-new-6.jpg" alt="Фото 6" /></figure>
+      <figure class="gallery-item"><img class="gallery-item__img" src="https://avatarfest.ru/assets/gallery-new-7.jpg" alt="Фото 7" /></figure>
+      <figure class="gallery-item"><img class="gallery-item__img" src="https://avatarfest.ru/assets/gallery-new-8.jpg" alt="Фото 8" /></figure>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ 10. ПОДВАЛ (как на сайте, без изменений) ============ -->
+<footer class="footer">
+  <div class="footer__layout">
+    <div class="footer__center">
+      <div class="footer__org">ООО «Арктик Эвент»</div>
+      <div class="footer__inn">ИНН 5190096762</div>
+      <div class="footer__legal">
+        <a class="footer__legal-link" href="https://avatarfest.ru/privacy" target="_blank">Политика конфиденциальности</a>
+        <a class="footer__legal-link" href="https://avatarfest.ru/offer" target="_blank">Публичная оферта</a>
+        <a class="footer__legal-link" href="https://avatarfest.ru/assets/Правила_посещения.docx" download>Правила посещения</a>
+        <a class="footer__legal-link" href="https://avatarfest.ru/assets/Пользовательское_соглашение.docx" download>Пользовательское соглашение</a>
+      </div>
+    </div>
+    <div class="footer__side">
+      <div class="footer__age">18+</div>
+      <div class="footer__social">
+        <a class="footer__link" href="https://t.me/portalshow2026" target="_blank" rel="noopener" aria-label="Telegram">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 13.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z"/></svg>
+        </a>
+        <a class="footer__link" href="https://vk.com/portalshow2026" target="_blank" rel="noopener" aria-label="ВКонтакте">
+          <svg viewBox="0 0 24 24"><path d="M12.785 16.241s.288-.032.436-.194c.136-.148.132-.427.132-.427s-.02-1.304.585-1.496c.598-.19 1.365 1.26 2.179 1.818.615.422 1.082.33 1.082.33l2.172-.03s1.136-.07.597-1.084c-.044-.078-.314-.666-1.617-1.883-1.362-1.271-1.18-1.065.46-3.263.998-1.333 1.397-2.147 1.272-2.495-.12-.332-.855-.244-.855-.244l-2.44.015s-.181-.025-.315.059c-.132.082-.216.272-.216.272s-.387 1.03-.903 1.906c-1.088 1.85-1.524 1.948-1.703 1.834-.414-.268-.31-1.077-.31-1.652 0-1.797.272-2.546-.528-2.743-.265-.064-.46-.106-1.138-.113-.869-.01-1.605.003-2.02.206-.277.136-.49.44-.36.457.161.021.525.098.718.362.248.341.239 1.107.239 1.107s.142 2.116-.332 2.378c-.325.18-.771-.187-1.728-1.866-.49-.848-.861-1.786-.861-1.786s-.071-.184-.2-.284c-.156-.12-.373-.158-.373-.158l-2.317.015s-.348.01-.475.161c-.113.135-.009.414-.009.414s1.813 4.238 3.864 6.376c1.882 1.958 4.022 1.83 4.022 1.83z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer__copy">© <span id="year">2026</span> Музыкальный фестиваль</div>
+  <div class="footer__font-credit">
+    Шрифт «Etude Noire» — автор Dimitri Antonov (Blue Curve Designstudio), лицензия
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>.
+    Источник: <a href="https://www.behance.net/gallery/213621487/Etude-Noire-FREE-font" target="_blank" rel="noopener">behance.net</a>
+  </div>
+</footer>
+
+<!-- Обратный отсчёт хиро -->
+<script>
+(function(){
+  var DATES = [ new Date('2026-08-14T21:30:00+03:00') ];
+  var elD = document.getElementById('cdDays'), elH = document.getElementById('cdHours'), elM = document.getElementById('cdMins'), elS = document.getElementById('cdSecs');
+  function pad(n){ return n < 10 ? '0'+n : ''+n; }
+  function tick(){
+    var now = Date.now(), target = null;
+    for (var i = 0; i < DATES.length; i++) { if (DATES[i].getTime() > now) { target = DATES[i]; break; } }
+    if (!target) { document.getElementById('heroCountdown').style.display = 'none'; return; }
+    var diff = Math.max(0, Math.floor((target - now) / 1000));
+    elD.textContent = Math.floor(diff / 86400);
+    elH.textContent = pad(Math.floor((diff % 86400) / 3600));
+    elM.textContent = pad(Math.floor((diff % 3600) / 60));
+    elS.textContent = pad(diff % 60);
+  }
+  tick(); setInterval(tick, 1000);
+})();
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+<!-- Яндекс.Билеты — тот же виджет, что и на сайте (обслуживает и хиро, и блок «Купить билет») -->
+<script>
+    var dealerName = 'YandexTicketsDealer';
+    var dealer = window[dealerName] = window[dealerName] || [];
+    dealer.push(['setDefaultClientKey', 'afafcd84-d9e6-4997-9de1-6665d245e021']);
+    dealer.push(['setDefaultRegionId', 213]);
+    (function () {
+        var rnd = '?' + new Date().getTime() * Math.random();
+        var script = document.createElement('script');
+        var target = document.getElementsByTagName('script')[0];
+        script.async = true;
+        script.src = 'https://widget.afisha.yandex.ru/dealer/dealer.js' + rnd;
+        target.parentNode.insertBefore(script, target);
+    })();
+</script>
+<script id="yandex-button" type="text/html">
+    <span style="display:inline-block;background:#fff;color:#111;border-radius:50px;padding:14px 32px;font-size:15px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;cursor:pointer;font-family:inherit;">Выбрать билеты</span>
+</script>
+
+<!-- Реальный script.js сайта — обслуживает аккордеон тарифов, звёзды и прочую интерактивность -->
+<script src="https://avatarfest.ru/script.js"></script>
+
+</body>
+</html>
