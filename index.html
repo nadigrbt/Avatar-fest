@@ -3735,6 +3735,30 @@ img {
   }
 }
 
+
+/* ---- Галерея «Как это было в июле» — кнопка «Ещё» / «Свернуть» ---- */
+.gallery-item--extra { display: none; }
+.gallery-grid.is-expanded .gallery-item--extra { display: block; }
+.gallery-toggle-wrap { display: flex; justify-content: center; margin-top: 24px; }
+.gallery-toggle-btn {
+  appearance: none;
+  cursor: pointer;
+  background: transparent;
+  border: 2px solid rgba(255,255,255,0.85);
+  border-radius: 50px;
+  color: #fff;
+  font-family: "TorukSC", sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 14px 48px;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 22px rgba(106,159,255,0.2);
+}
+.gallery-toggle-btn:hover {
+  background: rgba(255,255,255,0.07);
+  box-shadow: 0 0 36px rgba(106,159,255,0.45);
+}
 </style>
 <style>
 body { margin: 0; background: #000; }
@@ -4177,7 +4201,7 @@ body { margin: 0; background: #000; }
 <section class="section section--gallery">
   <div class="section__inner">
     <h2 class="section-title section-title--gallery">Как это было в июле</h2>
-    <div class="gallery-grid">
+    <div class="gallery-grid" id="galleryGrid">
       <figure class="gallery-item"><img class="gallery-item__img" src="assets/gallery-new-1.jpg" alt="Фото 1" /></figure>
       <figure class="gallery-item"><img class="gallery-item__img" src="assets/gallery-new-2.jpg" alt="Фото 2" /></figure>
       <figure class="gallery-item"><img class="gallery-item__img" src="assets/gallery-new-3.jpg" alt="Фото 3" /></figure>
@@ -4186,6 +4210,21 @@ body { margin: 0; background: #000; }
       <figure class="gallery-item"><img class="gallery-item__img" src="assets/gallery-new-6.jpg" alt="Фото 6" /></figure>
       <figure class="gallery-item"><img class="gallery-item__img" src="assets/gallery-new-7.jpg" alt="Фото 7" /></figure>
       <figure class="gallery-item"><img class="gallery-item__img" src="assets/gallery-new-8.jpg" alt="Фото 8" /></figure>
+      <figure class="gallery-item gallery-item--extra"><img class="gallery-item__img" src="assets/gallery-new-9.jpg" alt="Фото 9" /></figure>
+      <figure class="gallery-item gallery-item--extra"><img class="gallery-item__img" src="assets/gallery-new-10.jpg" alt="Фото 10" /></figure>
+      <figure class="gallery-item gallery-item--extra"><img class="gallery-item__img" src="assets/gallery-new-11.jpg" alt="Фото 11" /></figure>
+      <figure class="gallery-item gallery-item--extra"><img class="gallery-item__img" src="assets/gallery-new-12.jpg" alt="Фото 12" /></figure>
+      <figure class="gallery-item gallery-item--extra"><img class="gallery-item__img" src="assets/gallery-new-13.jpg" alt="Фото 13" /></figure>
+      <figure class="gallery-item gallery-item--extra"><img class="gallery-item__img" src="assets/gallery-new-14.jpg" alt="Фото 14" /></figure>
+      <figure class="gallery-item gallery-item--extra"><img class="gallery-item__img" src="assets/gallery-new-15.jpg" alt="Фото 15" /></figure>
+      <figure class="gallery-item gallery-item--extra"><img class="gallery-item__img" src="assets/gallery-new-16.jpg" alt="Фото 16" /></figure>
+      <figure class="gallery-item gallery-item--extra"><img class="gallery-item__img" src="assets/gallery-new-17.jpg" alt="Фото 17" /></figure>
+      <figure class="gallery-item gallery-item--extra"><img class="gallery-item__img" src="assets/gallery-new-18.jpg" alt="Фото 18" /></figure>
+      <figure class="gallery-item gallery-item--extra"><img class="gallery-item__img" src="assets/gallery-new-19.jpg" alt="Фото 19" /></figure>
+      <figure class="gallery-item gallery-item--extra"><img class="gallery-item__img" src="assets/gallery-new-20.jpg" alt="Фото 20" /></figure>
+    </div>
+    <div class="gallery-toggle-wrap">
+      <button type="button" id="galleryToggleBtn" class="gallery-toggle-btn">Ещё</button>
     </div>
   </div>
 </section>
@@ -4908,5 +4947,20 @@ initVideoPlayer();
 
 </script>
 
+
+<script>
+(function(){
+  var btn = document.getElementById('galleryToggleBtn');
+  var grid = document.getElementById('galleryGrid');
+  if (!btn || !grid) return;
+  btn.addEventListener('click', function(){
+    var expanded = grid.classList.toggle('is-expanded');
+    btn.textContent = expanded ? 'Свернуть' : 'Ещё';
+    if (!expanded) {
+      grid.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  });
+})();
+</script>
 </body>
 </html>
