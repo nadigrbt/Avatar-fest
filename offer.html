@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!--
+  ШАБЛОН. Публичная оферта на реализацию билетов. Стиль сайта.
+  Заполнить {{...}}. ОБЯЗАТЕЛЬНО проверить у юриста — типовой текст, не консультация.
+  Если билеты продаёт сервис Яндекс.Билеты, часть условий (возвраты, оплата) может
+  регулироваться правилами сервиса — согласовать, чтобы не было противоречий.
+-->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Публичная оферта — Портал Шоу: Аватар</title>
+<style>
+  @font-face{font-family:"Etude Noire";font-weight:400;font-display:swap;
+    src:url("assets/EtudeNoire-Regular.ttf") format("truetype")}
+  @font-face{font-family:"Etude Noire";font-weight:700;font-display:swap;
+    src:url("assets/EtudeNoire-Bold.ttf") format("truetype")}
+  @font-face{font-family:"TorukSC";font-display:swap;
+    src:url("assets/Toruks.ttf") format("truetype")}
+  :root{--accent:#6A9FFF;--muted:rgba(255,255,255,.6);--line:rgba(106,159,255,.2)}
+  body{margin:0;background:#000;color:#fff;font-family:"Etude Noire",sans-serif;line-height:1.65}
+  .wrap{max-width:760px;margin:0 auto;padding:56px 22px 90px}
+  .kicker{font-family:"TorukSC","Etude Noire",sans-serif;letter-spacing:.22em;
+    text-transform:uppercase;font-size:13px;color:var(--accent);margin:0 0 10px}
+  h1{font-weight:700;font-size:clamp(24px,5vw,32px);margin:0 0 6px}
+  .upd{color:var(--muted);font-size:14px;margin:0 0 34px}
+  h2{font-weight:700;font-size:19px;margin:34px 0 10px}
+  p,li{color:rgba(255,255,255,.86)}
+  a{color:var(--accent)}
+  ul{padding-left:20px}
+  .ph{color:#FF6B35}
+  hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+  .small{color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="kicker">Портал Шоу: Аватар</p>
+  <h1>Публичная оферта о реализации билетов</h1>
+  <p class="upd">Редакция от <span class="ph">{{дата}}</span></p>
+
+  <h2>1. Общие положения</h2>
+  <p>Настоящий документ является публичной офертой ООО «Арктик Эвент», ИНН 5190096762,
+  ОГРН <span class="ph">{{ОГРН}}</span>, адрес: <span class="ph">{{юридический адрес}}</span>
+  (далее — «Организатор»), и содержит условия приобретения билетов на мероприятие
+  «Портал Шоу: Аватар». Акцептом оферты является оплата билета.</p>
+
+  <h2>2. Предмет</h2>
+  <p>Организатор предоставляет покупателю право посещения мероприятия согласно выбранной
+  категории билета, а покупатель оплачивает билет по цене, указанной при оформлении.
+  Категории и условия зон описаны на Сайте avatarfest.ru.</p>
+
+  <h2>3. Цена и оплата</h2>
+  <p>Стоимость билета указывается в рублях РФ при оформлении. Оплата производится через
+  сервис продажи билетов <span class="ph">{{Яндекс.Билеты / иной сервис}}</span>.
+  Промокоды и персональные условия применяются в момент оплаты и не суммируются между собой.</p>
+
+  <h2>4. Возврат билетов</h2>
+  <p>Возврат осуществляется в соответствии с законодательством РФ и правилами сервиса
+  продажи билетов. Сроки и размер возврата зависят от даты обращения относительно даты
+  мероприятия. Порядок возврата: <span class="ph">{{описать или сослаться на правила сервиса}}</span>.</p>
+
+  <h2>5. Условия посещения</h2>
+  <p>Мероприятие имеет возрастное ограничение 18+. Посетитель обязан соблюдать
+  <a href="assets/Правила_посещения.docx">Правила посещения</a>.
+  Организатор вправе отказать в посещении при их нарушении.</p>
+
+  <h2>6. Ответственность</h2>
+  <p>Организатор не несёт ответственности за невозможность посещения по причинам,
+  зависящим от покупателя. В случае отмены мероприятия Организатором покупателю
+  возвращается стоимость билета.</p>
+
+  <h2>7. Реквизиты</h2>
+  <p>ООО «Арктик Эвент», ИНН 5190096762, ОГРН <span class="ph">{{ОГРН}}</span>,
+  адрес: <span class="ph">{{юридический адрес}}</span>,
+  e-mail: <span class="ph">{{email}}</span>, тел.: <span class="ph">{{телефон}}</span>.</p>
+
+  <hr>
+  <p class="small">Шаблон. Перед публикацией проверить у юриста, заполнить
+  <span class="ph">{{...}}</span> и согласовать раздел возвратов с правилами Яндекс.Билетов.</p>
+</div>
+</body>
+</html>
