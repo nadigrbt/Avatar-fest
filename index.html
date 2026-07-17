@@ -3869,6 +3869,20 @@ body { margin: 0; background: #000; }
 .section--story      { padding-bottom: 80px !important; }
 .section--gallery    { padding-top: 80px !important; }
 
+/* ---- Мобильная версия: те же отступы между блоками, но в 1,5 раза меньше
+   (80px -> 53px, было 160px между блоками -> ~106px). ---- */
+@media (max-width: 760px) {
+  .section--tezis      { padding-top: 53px !important; padding-bottom: 53px !important; }
+  .section--artists    { padding-top: 53px !important; padding-bottom: 53px !important; }
+  .section--schedule   { padding-top: 53px !important; padding-bottom: 53px !important; }
+  .section--story-cards{ padding-top: 53px !important; padding-bottom: 53px !important; }
+  .section--tiers      { padding-top: 53px !important; padding-bottom: 53px !important; }
+  .section--tickets    { padding-top: 53px !important; padding-bottom: 53px !important; }
+  .section--concept    { padding-top: 53px !important; }
+  .section--story      { padding-bottom: 53px !important; }
+  .section--gallery    { padding-top: 53px !important; }
+}
+
 /* Атрибуция шрифта Etude Noire (CC BY 4.0, автор Dimitri Antonov) — обязательное
    требование лицензии, размещаем мелким текстом в подвале. */
 .footer__font-credit {
