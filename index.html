@@ -3773,7 +3773,7 @@ body { margin: 0; background: #000; }
 .hero__price-line { margin-top: 18px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .hero__price-line .price-main { color: #ffffff; font-weight: 700; font-size: clamp(16px, 2vw, 20px); letter-spacing: 0.04em; }
 .hero__price-line .price-sub { font-family: "Etude Noire", sans-serif; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
-.hero__social-corner { position: absolute; top: 20px; right: 20px; z-index: 5; }
+.hero__social-corner { position: absolute; top: 20px; left: 20px; z-index: 5; }
 .hero__social-corner .footer__link { width: 68px; height: 68px; }
 .hero__social-corner .footer__link svg { width: 36px; height: 36px; }
 .hero__social-corner .footer__link:last-child { margin-left: -34px; }
@@ -3783,7 +3783,7 @@ body { margin: 0; background: #000; }
   .hero__tagline { margin-top: 14px; }
 }
 @media (max-width: 760px) {
-  .hero__social-corner { top: 14px; right: 14px; }
+  .hero__social-corner { top: 14px; left: 14px; }
   .hero__social-corner .footer__link { width: 44px; height: 44px; }
   .hero__social-corner .footer__link svg { width: 24px; height: 24px; }
   .hero__social-corner .footer__link:last-child { margin-left: -18px; }
@@ -3796,6 +3796,14 @@ body { margin: 0; background: #000; }
 .tezis-list { grid-template-columns: repeat(3, 1fr) !important; max-width: 960px; margin-left: auto !important; margin-right: auto !important; }
 @media (max-width: 1100px) {
   .tezis-list { grid-template-columns: repeat(2, 1fr) !important; max-width: 640px; }
+}
+@media (max-width: 600px) {
+  /* На узких телефонах 2 колонки слишком тесные — длинные слова
+     («Иммерсивная», «Масштабные») переносились посреди слова.
+     Разворачиваем в одну колонку на всю ширину, шрифт не трогаем —
+     он одинаковый (12px) во всех блоках этой секции. */
+  .tezis-list { grid-template-columns: 1fr !important; max-width: 100%; }
+  .tezis-item { word-break: normal !important; overflow-wrap: normal !important; }
 }
 
 /* ---- Блок 7: Купить билет — было 2 колонки под 2 даты, осталась 1, центрируем ---- */
