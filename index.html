@@ -3834,6 +3834,29 @@ body { margin: 0; background: #000; }
 .ya-widgets-wrap .ticket-row { width: 100%; max-width: 480px; margin-bottom: 0; }
 .ticket-row__date, .ticket-row__venue { white-space: nowrap; }
 
+/* ---- Плавающая кнопка «Купить билет» (ticket.png), фиксирована в правом нижнем углу ---- */
+.floating-ticket-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 999;
+  display: block;
+  width: 84px;
+  line-height: 0;
+  transition: transform 0.2s ease;
+}
+.floating-ticket-btn img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.floating-ticket-btn:hover {
+  transform: scale(1.06);
+}
+@media (max-width: 760px) {
+  .floating-ticket-btn { right: 12px; bottom: 12px; width: 62px; }
+}
+
 /* ---- Единый размер и шрифт заголовков блоков (как «Галерея») ---- */
 .tezis-title,
 .schedule__title,
@@ -3911,6 +3934,10 @@ body { margin: 0; background: #000; }
 </style>
 </head>
 <body>
+
+<a href="https://afisha.yandex.ru/moscow/concert/836308" target="_blank" rel="noopener" class="floating-ticket-btn" aria-label="Купить билет">
+  <img src="assets/ticket.png" alt="Купить билет" />
+</a>
 
 <main>
 
