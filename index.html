@@ -3818,6 +3818,17 @@ body { margin: 0; background: #000; }
   .tezis-item { word-break: normal !important; overflow-wrap: normal !important; }
 }
 
+/* ---- Текст блока «Концепция» на мобильной — тот же размер/высота/цвет,
+   что у подписи блока «Как это будет?» (.story-cards__subtitle: 15px,
+   line-height 1.6, rgba(255,255,255,0.5)). Только мобильная версия. ---- */
+@media (max-width: 760px) {
+  .story-copy p {
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+  }
+}
+
 /* ---- Блок 7: Купить билет — было 2 колонки под 2 даты, осталась 1, центрируем ---- */
 .ya-widgets-wrap { display: flex !important; justify-content: center !important; }
 .ya-widgets-wrap .ticket-row { width: 100%; max-width: 480px; margin-bottom: 0; }
