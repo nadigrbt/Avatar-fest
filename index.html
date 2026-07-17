@@ -1368,6 +1368,10 @@ img {
      версия — десктопный .sched-desktop это не затрагивает. */
   .sched-list { z-index: 0; }
   .sched-row { z-index: 1; }
+
+  /* Тонкие светлые полоски-разделители между строками расписания — убираем
+     на мобильной версии по просьбе. */
+  .sched-row { border-bottom: none !important; }
 }
 
 @media (max-width: 760px) {
