@@ -506,6 +506,14 @@ img {
   line-height: 1;
   padding-bottom: 18px;
 }
+.hero__countdown-placeholder {
+  margin-top: 28px;
+  font-family: "TorukSC", sans-serif;
+  font-size: clamp(18px, 2.4vw, 26px);
+  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.75);
+  text-shadow: 0 0 20px rgba(106,159,255,0.5);
+}
 
 .hero__actions {
   margin-top: 28px;
@@ -3973,12 +3981,12 @@ body { margin: 0; background: #000; }
         <div class="hero__date-row">
           <span class="hero__date-city">Москва</span>
           <span class="hero__date-sep hero__date-sep--line" aria-hidden="true"></span>
-          <span class="hero__date-day">14 августа</span>
+          <span class="hero__date-day" data-original-text="14 августа">Скоро</span>
           <span class="hero__date-sep hero__date-sep--line" aria-hidden="true"></span>
           <span class="hero__date-venue">BASE</span>
         </div>
       </div>
-      <div class="hero__countdown" id="heroCountdown">
+      <div class="hero__countdown" id="heroCountdown" style="display:none;" data-hidden-temporarily="countdown">
         <div class="hero__countdown-unit"><span class="hero__countdown-num" id="cdDays">--</span><span class="hero__countdown-label">дней</span></div>
         <div class="hero__countdown-sep">:</div>
         <div class="hero__countdown-unit"><span class="hero__countdown-num" id="cdHours">--</span><span class="hero__countdown-label">часов</span></div>
@@ -3987,11 +3995,12 @@ body { margin: 0; background: #000; }
         <div class="hero__countdown-sep">:</div>
         <div class="hero__countdown-unit"><span class="hero__countdown-num" id="cdSecs">--</span><span class="hero__countdown-label">секунд</span></div>
       </div>
+      <div class="hero__countdown-placeholder" data-temporary="true">СКОРО БУДЕТ ИНФОРМАЦИЯ</div>
       <div class="hero__price-line">
         <span class="price-main">Билеты от 1 500 ₽</span>
-        <span class="price-sub">Цены растут после 10 августа</span>
+        <span class="price-sub" style="display:none;" data-hidden-temporarily="price-sub">Цены растут после 10 августа</span>
       </div>
-      <div class="hero__actions">
+      <div class="hero__actions" style="display:none;" data-hidden-temporarily="buy-button">
         <a class="hero__invite-btn" href="https://afisha.yandex.ru/moscow/concert/836308" target="_blank" rel="noopener" style="text-decoration:none;">Купить билет</a>
       </div>
     </div>
@@ -4279,7 +4288,7 @@ body { margin: 0; background: #000; }
 </section>
 
 <!-- ============ 8. КУПИТЬ БИЛЕТ ============ -->
-<section class="section section--tickets" id="tickets">
+<section class="section section--tickets" id="tickets" style="display:none;" data-hidden-temporarily="tickets-section">
   <div class="section__inner">
     <h2 class="section-title section-title--tickets">Купить билет</h2>
     <div class="ya-widgets-wrap">
