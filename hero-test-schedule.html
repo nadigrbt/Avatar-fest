@@ -170,17 +170,19 @@ html, body {
   position: relative; z-index: 1;
 }
 
+/* Свечение НЕ вылезает за пределы своей группы (никаких отрицательных
+   отступов) — вместо этого JS всегда держит центр круга на безопасном
+   расстоянии от краёв блока, так что градиент физически не успевает
+   упереться в границу и погаснуть до неё. Это устраняет и шов на стыке
+   с соседней колонкой, и резкий обрез картинки. */
 .sched-glow--shared {
   position: absolute;
-  top: -150px; bottom: -150px; left: -90px; right: -90px;
+  inset: 0;
   z-index: 0; pointer-events: none;
-  background: radial-gradient(circle 240px at var(--gx, 50%) var(--gy, 50%),
+  background: radial-gradient(ellipse 240px 140px at var(--gx, 50%) var(--gy, 50%),
     rgba(232,201,160,0.9) 0%, rgba(232,184,122,0.3) 40%, rgba(232,184,122,0) 72%);
   opacity: 0;
   transition: opacity 0.5s ease;
-}
-@media (max-width: 900px) {
-  .sched-glow--shared { left: -20px; right: -20px; }
 }
 </style>
 </head>
@@ -331,11 +333,13 @@ html, body {
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduceMotion) return;
 
-  var isTouch = window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches;
-
   // Один общий слой свечения на группу из трёх блоков (десктоп-колонки и
-  // мобильные строки — два отдельных DOM-узла, у каждого своя логика).
-  function setupGroup(selector, insetLeft, insetTop){
+  // мобильные строки — два отдельных DOM-узла). Круг свободно следует за
+  // курсором/пальцем — как в первом блоке (hero) — но координата всегда
+  // "поджимается" внутрь границ группы (clamp), чтобы центр круга никогда
+  // не подходил к краю ближе, чем нужно градиенту, чтобы полностью
+  // погаснуть. Так свечение не обрезается и не даёт шва с соседним блоком.
+  function setupGroup(selector, marginX, marginY){
     var group = document.querySelector(selector);
     if (!group) return;
     var glow = group.querySelector('.sched-glow--shared');
@@ -354,43 +358,38 @@ html, body {
       return found;
     }
 
+    function clamp(v, lo, hi){ return v < lo ? lo : (v > hi ? hi : v); }
+
     function place(clientX, clientY){
       var rect = group.getBoundingClientRect();
-      var x = (clientX - rect.left) + insetLeft;
-      var y = (clientY - rect.top) + insetTop;
+      if (rect.width <= 0 || rect.height <= 0) return;
+      var loX = Math.min(marginX, rect.width / 2);
+      var loY = Math.min(marginY, rect.height / 2);
+      var x = clamp(clientX - rect.left, loX, rect.width - loX);
+      var y = clamp(clientY - rect.top, loY, rect.height - loY);
       group.style.setProperty('--gx', x + 'px');
       group.style.setProperty('--gy', y + 'px');
     }
 
-    if (!isTouch) {
-      // Десктоп/мышь: круг свободно следует за курсором по всей группе,
-      // яркость меняется в зависимости от того, над какой колонкой курсор.
-      // В покое свечения нет.
-      var hideTimer = null;
-      group.addEventListener('pointermove', function(e){
-        place(e.clientX, e.clientY);
-        glow.style.opacity = activeFor(e.clientX, e.clientY, true);
-        clearTimeout(hideTimer);
-        hideTimer = setTimeout(function(){ glow.style.opacity = '0'; }, 900);
-      });
-      group.addEventListener('pointerleave', function(){ glow.style.opacity = '0'; });
-    } else {
-      // Тач: короткая вспышка ровно в точке касания, без слежения за
-      // пальцем во время скролла — только touchstart, никаких touchmove.
-      var flashTimer = null;
-      group.addEventListener('touchstart', function(e){
-        if (!e.touches || !e.touches[0]) return;
-        var t = e.touches[0];
-        place(t.clientX, t.clientY);
-        glow.style.opacity = activeFor(t.clientX, t.clientY, false);
-        clearTimeout(flashTimer);
-        flashTimer = setTimeout(function(){ glow.style.opacity = '0'; }, 1000);
-      }, { passive: true });
+    var hideTimer = null;
+    function show(clientX, clientY, horizontal){
+      place(clientX, clientY);
+      glow.style.opacity = activeFor(clientX, clientY, horizontal);
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(function(){ glow.style.opacity = '0'; }, 900);
     }
+    function hide(){ glow.style.opacity = '0'; }
+
+    group.addEventListener('pointermove', function(e){ if (e.pointerType !== 'touch') show(e.clientX, e.clientY, true); });
+    group.addEventListener('pointerleave', function(e){ if (e.pointerType !== 'touch') hide(); });
+    group.addEventListener('touchstart', function(e){ if (e.touches && e.touches[0]) show(e.touches[0].clientX, e.touches[0].clientY, false); }, { passive: true });
+    group.addEventListener('touchmove', function(e){ if (e.touches && e.touches[0]) show(e.touches[0].clientX, e.touches[0].clientY, false); }, { passive: true });
+    group.addEventListener('touchend', hide);
+    group.addEventListener('touchcancel', hide);
   }
 
-  setupGroup('.sched-cols .sched-dawn-group', 90, 150);
-  setupGroup('.sched-list .sched-dawn-group', 20, 150);
+  setupGroup('.sched-cols .sched-dawn-group', 175, 95);
+  setupGroup('.sched-list .sched-dawn-group', 150, 110);
 })();
 </script>
 </body>
