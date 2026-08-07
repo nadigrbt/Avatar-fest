@@ -160,10 +160,10 @@ html, body {
 .sched-cols .sched-dawn-group { display: flex; flex: 3; align-items: stretch; }
 .sched-list .sched-dawn-group { display: flex; flex-direction: column; }
 
-/* Разделители между тремя "рассветными" колонками убираем, чтобы свечение
-   переходило от одной к другой без видимого шва. */
-.sched-dawn-group .sched-col--peak,
-.sched-dawn-group .sched-col--dozari { border-right-color: transparent; }
+/* Разделители между колонками оставляем как обычно — просто рисуем их
+   НАД свечением (z-index:1), чтобы линия была видна поверх круга, а не
+   резала его форму. */
+.sched-dawn-group .sched-col { position: relative; z-index: 1; }
 
 .sched-col__info, .sched-col__tags,
 .sched-row__body, .sched-row__tags, .sched-row__dot, .sched-row__time, .sched-row__sep {
@@ -173,16 +173,20 @@ html, body {
 /* Свечение НЕ вылезает за пределы своей группы (никаких отрицательных
    отступов) — вместо этого JS всегда держит центр круга на безопасном
    расстоянии от краёв блока, так что градиент физически не успевает
-   упереться в границу и погаснуть до неё. Это устраняет и шов на стыке
-   с соседней колонкой, и резкий обрез картинки. */
+   упереться в границу и погаснуть до неё. Это устраняет и резкий обрез
+   картинки, а видимые разделители колонок просто рисуются поверх. */
 .sched-glow--shared {
   position: absolute;
   inset: 0;
   z-index: 0; pointer-events: none;
-  background: radial-gradient(ellipse 240px 140px at var(--gx, 50%) var(--gy, 50%),
+  --glow-r: 240px;
+  background: radial-gradient(circle var(--glow-r) at var(--gx, 50%) var(--gy, 50%),
     rgba(232,201,160,0.9) 0%, rgba(232,184,122,0.3) 40%, rgba(232,184,122,0) 72%);
   opacity: 0;
   transition: opacity 0.5s ease;
+}
+@media (max-width: 900px) {
+  .sched-glow--shared { --glow-r: 180px; }
 }
 </style>
 </head>
@@ -388,8 +392,8 @@ html, body {
     group.addEventListener('touchcancel', hide);
   }
 
-  setupGroup('.sched-cols .sched-dawn-group', 175, 95);
-  setupGroup('.sched-list .sched-dawn-group', 150, 110);
+  setupGroup('.sched-cols .sched-dawn-group', 175, 175);
+  setupGroup('.sched-list .sched-dawn-group', 130, 130);
 })();
 </script>
 </body>
