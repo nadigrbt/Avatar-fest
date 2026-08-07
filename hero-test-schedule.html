@@ -156,6 +156,9 @@ html, body {
 /* ── Эффект рассвета: круг, следующий за курсором, только в трёх финальных блоках ── */
 .sched-col--peak, .sched-col--dozari, .sched-col--ritual,
 .sched-row--peak, .sched-row--dozari, .sched-row--ritual { position: relative; }
+/* Убираем разделители между тремя "рассветными" колонками, чтобы свечение
+   переходило от одной к другой без видимого шва. */
+.sched-col--peak, .sched-col--dozari { border-right-color: transparent; }
 .sched-col__info, .sched-col__tags,
 .sched-row__body, .sched-row__tags, .sched-row__dot, .sched-row__time, .sched-row__sep {
   position: relative; z-index: 1;
@@ -325,6 +328,41 @@ html, body {
     return;
   }
 
+  // Тач-устройства (в первую очередь телефоны) не имеют курсора, а любое
+  // касание блока почти всегда означает скролл страницы, а не наведение.
+  // Поэтому на тач circle не пытается следовать за пальцем (это и давало
+  // "размазывание"), а мягко проявляется/гаснет по мере того, как блок
+  // проходит центр экрана при прокрутке — рассвет как бы "включается"
+  // сам, без взаимодействия.
+  var isTouch = window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+  if (isTouch) {
+    var rafId = null;
+    function updateScrollGlow(){
+      rafId = null;
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var viewCenter = vh / 2;
+      targets.forEach(function(el){
+        var glow = el.querySelector('.sched-glow');
+        if (!glow) return;
+        var active = parseFloat(glow.getAttribute('data-active') || '0.5');
+        var rect = el.getBoundingClientRect();
+        var elCenter = rect.top + rect.height / 2;
+        var maxDist = viewCenter + rect.height / 2;
+        var dist = Math.abs(elCenter - viewCenter);
+        var ratio = Math.max(0, 1 - dist / maxDist);
+        glow.style.opacity = String(active * ratio);
+      });
+    }
+    function onScroll(){ if (rafId === null) rafId = requestAnimationFrame(updateScrollGlow); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    updateScrollGlow();
+    return;
+  }
+
+  // Десктоп/мышь: круг появляется только при движении курсора, в покое
+  // свечения нет вовсе.
   targets.forEach(function(el){
     var glow = el.querySelector('.sched-glow');
     if (!glow) return;
@@ -348,34 +386,8 @@ html, body {
     }
     function clearSpot(){ glow.style.opacity = rest; }
 
-    // Мышь: круг свободно следует за курсором.
-    el.addEventListener('pointermove', function(e){ if (e.pointerType !== 'touch') setSpot(e.clientX, e.clientY); });
-    el.addEventListener('pointerleave', function(e){ if (e.pointerType !== 'touch') clearSpot(); });
-
-    // Тач: НЕ следим за touchmove — палец на телефоне почти всегда просто
-    // скроллит страницу, а не "наводит курсор", и live-пересчёт позиции на
-    // каждый touchmove во время скролла даёт эффект "размазанного" пятна
-    // (строка едет вверх под пальцем, а расчёт координат — нет). Поэтому на
-    // тач-устройствах круг просто мягко проявляется в момент касания блока
-    // и гаснет, как только палец поднят или ушёл в скролл.
-    var touchStartY = 0, touchIsScroll = false;
-    el.addEventListener('touchstart', function(e){
-      if (!e.touches || !e.touches[0]) return;
-      touchIsScroll = false;
-      touchStartY = e.touches[0].clientY;
-      setSpot(e.touches[0].clientX, e.touches[0].clientY);
-    }, { passive: true });
-    el.addEventListener('touchmove', function(e){
-      if (touchIsScroll || !e.touches || !e.touches[0]) return;
-      // Как только палец сдвинулся вертикально больше чем на 10px — считаем
-      // это скроллом и сразу гасим круг, не дожидаясь touchend.
-      if (Math.abs(e.touches[0].clientY - touchStartY) > 10) {
-        touchIsScroll = true;
-        clearSpot();
-      }
-    }, { passive: true });
-    el.addEventListener('touchend', clearSpot);
-    el.addEventListener('touchcancel', clearSpot);
+    el.addEventListener('pointermove', function(e){ setSpot(e.clientX, e.clientY); });
+    el.addEventListener('pointerleave', clearSpot);
   });
 })();
 </script>
