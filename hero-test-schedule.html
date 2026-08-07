@@ -348,11 +348,34 @@ html, body {
     }
     function clearSpot(){ glow.style.opacity = rest; }
 
-    el.addEventListener('pointermove', function(e){ setSpot(e.clientX, e.clientY); });
-    el.addEventListener('pointerleave', clearSpot);
-    el.addEventListener('touchstart', function(e){ if (e.touches && e.touches[0]) setSpot(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
-    el.addEventListener('touchmove', function(e){ if (e.touches && e.touches[0]) setSpot(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+    // Мышь: круг свободно следует за курсором.
+    el.addEventListener('pointermove', function(e){ if (e.pointerType !== 'touch') setSpot(e.clientX, e.clientY); });
+    el.addEventListener('pointerleave', function(e){ if (e.pointerType !== 'touch') clearSpot(); });
+
+    // Тач: НЕ следим за touchmove — палец на телефоне почти всегда просто
+    // скроллит страницу, а не "наводит курсор", и live-пересчёт позиции на
+    // каждый touchmove во время скролла даёт эффект "размазанного" пятна
+    // (строка едет вверх под пальцем, а расчёт координат — нет). Поэтому на
+    // тач-устройствах круг просто мягко проявляется в момент касания блока
+    // и гаснет, как только палец поднят или ушёл в скролл.
+    var touchStartY = 0, touchIsScroll = false;
+    el.addEventListener('touchstart', function(e){
+      if (!e.touches || !e.touches[0]) return;
+      touchIsScroll = false;
+      touchStartY = e.touches[0].clientY;
+      setSpot(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: true });
+    el.addEventListener('touchmove', function(e){
+      if (touchIsScroll || !e.touches || !e.touches[0]) return;
+      // Как только палец сдвинулся вертикально больше чем на 10px — считаем
+      // это скроллом и сразу гасим круг, не дожидаясь touchend.
+      if (Math.abs(e.touches[0].clientY - touchStartY) > 10) {
+        touchIsScroll = true;
+        clearSpot();
+      }
+    }, { passive: true });
     el.addEventListener('touchend', clearSpot);
+    el.addEventListener('touchcancel', clearSpot);
   });
 })();
 </script>
