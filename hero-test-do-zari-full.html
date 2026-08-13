@@ -269,9 +269,34 @@ body {
   transition: transform 400ms ease;
 }
 .gallery-item:hover .gallery-item__img { transform: scale(1.04); }
+
+.gallery-item--extra { display: none; }
+.gallery-grid.is-expanded .gallery-item--extra { display: block; }
+.gallery-toggle-wrap { display: flex; justify-content: center; margin-top: 28px; }
+.gallery-toggle-btn {
+  appearance: none;
+  cursor: pointer;
+  background: transparent;
+  border: 1.5px solid rgba(232,201,160,0.5);
+  border-radius: 50px;
+  color: #E8C9A0;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 13px 44px;
+  transition: background 200ms, box-shadow 200ms, border-color 200ms;
+}
+.gallery-toggle-btn:hover {
+  background: rgba(232,201,160,0.08);
+  border-color: rgba(232,201,160,0.85);
+  box-shadow: 0 0 28px rgba(232,201,160,0.25);
+}
 @media (max-width: 760px) {
   .section--gallery { padding: 56px 16px 64px; }
   .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .gallery-toggle-btn { padding: 12px 36px; font-size: 13px; }
 }
 
 /* ── Блок 4: Что вас ждёт ── */
@@ -1107,17 +1132,35 @@ html, body {
 
 <section class="section--gallery">
   <h2 class="section-title--gallery">Как это было в июле</h2>
-  <div class="gallery-grid">
+  <div class="gallery-grid" id="galleryGrid">
     <figure class="gallery-item"><img class="gallery-item__img" src="assets/gallery-new-1.jpg" alt="Фото 1" loading="lazy"></figure>
     <figure class="gallery-item"><img class="gallery-item__img" src="assets/gallery-new-2.jpg" alt="Фото 2" loading="lazy"></figure>
     <figure class="gallery-item"><img class="gallery-item__img" src="assets/gallery-new-3.jpg" alt="Фото 3" loading="lazy"></figure>
     <figure class="gallery-item"><img class="gallery-item__img" src="assets/gallery-new-4.jpg" alt="Фото 4" loading="lazy"></figure>
-    <figure class="gallery-item"><img class="gallery-item__img" src="assets/gallery-new-5.jpg" alt="Фото 5" loading="lazy"></figure>
-    <figure class="gallery-item"><img class="gallery-item__img" src="assets/gallery-new-6.jpg" alt="Фото 6" loading="lazy"></figure>
-    <figure class="gallery-item"><img class="gallery-item__img" src="assets/gallery-new-7.jpg" alt="Фото 7" loading="lazy"></figure>
-    <figure class="gallery-item"><img class="gallery-item__img" src="assets/gallery-new-8.jpg" alt="Фото 8" loading="lazy"></figure>
+    <figure class="gallery-item gallery-item--extra"><img class="gallery-item__img" src="assets/gallery-new-5.jpg" alt="Фото 5" loading="lazy"></figure>
+    <figure class="gallery-item gallery-item--extra"><img class="gallery-item__img" src="assets/gallery-new-6.jpg" alt="Фото 6" loading="lazy"></figure>
+    <figure class="gallery-item gallery-item--extra"><img class="gallery-item__img" src="assets/gallery-new-7.jpg" alt="Фото 7" loading="lazy"></figure>
+    <figure class="gallery-item gallery-item--extra"><img class="gallery-item__img" src="assets/gallery-new-8.jpg" alt="Фото 8" loading="lazy"></figure>
+  </div>
+  <div class="gallery-toggle-wrap">
+    <button type="button" id="galleryToggleBtn" class="gallery-toggle-btn">Ещё</button>
   </div>
 </section>
+
+<script>
+(function(){
+  var btn = document.getElementById('galleryToggleBtn');
+  var grid = document.getElementById('galleryGrid');
+  if (!btn || !grid) return;
+  btn.addEventListener('click', function(){
+    var expanded = grid.classList.toggle('is-expanded');
+    btn.textContent = expanded ? 'Свернуть' : 'Ещё';
+    if (!expanded) {
+      grid.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  });
+})();
+</script>
 
 <style>
 /* ── Повтор CTA перед футером ── */
