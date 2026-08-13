@@ -15,7 +15,7 @@
 
 
 :root {
-  --bg: #000000;
+  --bg: #0a0a0d;
   --text: #ffffff;
 }
 *, *::before, *::after { box-sizing: border-box; }
@@ -73,13 +73,27 @@ body {
 .hero__social-corner .footer__link svg { width: 36px; height: 36px; fill: currentColor; }
 .hero__social-corner .footer__link:last-child { margin-left: -34px; }
 
+.hero__age-badge {
+  position: absolute; top: 54px; right: 20px; z-index: 5;
+  transform: translateY(-50%);
+  font-family: "Teko", sans-serif;
+  font-size: 20px; font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  border: 1.5px solid rgba(255,255,255,0.32);
+  border-radius: 6px;
+  padding: 3px 10px 1px;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  background: rgba(0,0,0,0.15);
+}
+
 .hero__caption {
   position: absolute;
   bottom: 0; left: 0; right: 0;
   z-index: 3;
   text-align: center;
   padding: 160px 20px 44px;
-  background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.92) 55%, #000 100%);
+  background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.92) 55%, #0a0a0d 100%);
 }
 
 .hero__content {
@@ -211,6 +225,7 @@ body {
   .hero__social-corner .footer__link { width: 44px; height: 44px; }
   .hero__social-corner .footer__link svg { width: 24px; height: 24px; }
   .hero__social-corner .footer__link:last-child { margin-left: -18px; }
+  .hero__age-badge { top: 36px; right: 14px; font-size: 15px; padding: 2px 8px 1px; }
   .hero__photo, .hero__photo-dawn, .hero__photo-spotlight {
     background-position: center 30% !important;
     background-size: 150% auto !important;
@@ -260,7 +275,18 @@ body {
 }
 
 /* ── Блок 4: Что вас ждёт ── */
-.section--reveal { padding: 96px 20px 100px; max-width: 1180px; margin: 0 auto; }
+.section--reveal { padding: 96px 20px 100px; max-width: 1180px; margin: 0 auto; position: relative; }
+.section--reveal::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  width: 100vw; height: 160px;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, #0a0a0d 0%, rgba(10,10,13,0) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+.section--reveal > * { position: relative; z-index: 1; }
 .reveal__eyebrow {
   display: block; text-align: center;
   font-family: "Ubuntu", sans-serif;
@@ -340,6 +366,12 @@ body {
   text-transform: uppercase;
   color: #fff;
   margin: 0 0 10px;
+  line-height: 1.25;
+  min-height: 2.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
 }
 .reveal__item-title::after {
   content: ''; display: block; width: 22px; height: 1px;
@@ -350,7 +382,7 @@ body {
   color: rgba(255,255,255,0.55);
 }
 
-.reveal__wave { position: relative; height: 60px; margin: 28px 0 8px; }
+.reveal__wave { position: relative; height: 60px; margin: 28px 0 16px; }
 .reveal__wave svg { width: 100%; height: 100%; }
 
 .reveal__tagline {
@@ -379,7 +411,7 @@ body {
 * { box-sizing: border-box; }
 html, body {
   margin: 0; padding: 0;
-  background: #0a0a0c;
+  background: #0a0a0d;
   color: #fff;
   font-family: "Ubuntu", sans-serif;
   overflow-x: hidden;
@@ -477,6 +509,19 @@ html, body {
 
 .sched-wave-wrap { position: absolute; left: 0; right: 0; bottom: 18px; height: 70px; pointer-events: none; }
 .sched-wave-wrap svg { width: 100%; height: 100%; }
+.sched-wave-dot {
+  position: absolute;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #8a6fe0;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 6px rgba(138,111,224,0.55);
+}
+.sched-wave-dot--gold {
+  width: 12px; height: 12px;
+  background: #E8B87A;
+  box-shadow: 0 0 8px rgba(232,184,122,0.65);
+}
 
 .sched-tag {
   display: inline-flex; flex-direction: row; align-items: center; gap: 6px;
@@ -578,6 +623,8 @@ html, body {
       <svg viewBox="0 0 24 24"><path d="M12.785 16.241s.288-.032.436-.194c.136-.148.132-.427.132-.427s-.02-1.304.585-1.496c.598-.19 1.365 1.26 2.179 1.818.615.422 1.082.33 1.082.33l2.172-.03s1.136-.07.597-1.084c-.044-.078-.314-.666-1.617-1.883-1.362-1.271-1.18-1.065.46-3.263.998-1.333 1.397-2.147 1.272-2.495-.12-.332-.855-.244-.855-.244l-2.44.015s-.181-.025-.315.059c-.132.082-.216.272-.216.272s-.387 1.03-.903 1.906c-1.088 1.85-1.524 1.948-1.703 1.834-.414-.268-.31-1.077-.31-1.652 0-1.797.272-2.546-.528-2.743-.265-.064-.46-.106-1.138-.113-.869-.01-1.605.003-2.02.206-.277.136-.49.44-.36.457.161.021.525.098.718.362.248.341.239 1.107.239 1.107s.142 2.116-.332 2.378c-.325.18-.771-.187-1.728-1.866-.49-.848-.861-1.786-.861-1.786s-.071-.184-.2-.284c-.156-.12-.373-.158-.373-.158l-2.317.015s-.348.01-.475.161c-.113.135-.009.414-.009.414s1.813 4.238 3.864 6.376c1.882 1.958 4.022 1.83 4.022 1.83z"/></svg>
     </a>
   </div>
+
+  <div class="hero__age-badge">18+</div>
 
   <div class="hero__caption">
     <div class="hero__content">
@@ -931,15 +978,15 @@ html, body {
     </div>
     <div class="sched-wave-wrap" aria-hidden="true">
       <svg viewBox="0 0 700 80" fill="none" preserveAspectRatio="none">
-        <path d="M50 46 C75 46 90 24 105 24 C125 24 140 55 160 55 C180 55 200 24 220 24 C245 24 260 58 285 58 C310 58 325 18 350 18 C375 18 390 50 415 50 C440 50 460 30 490 30 C520 30 545 46 580 46 C605 46 620 40 650 38" stroke="url(#wg)" stroke-width="1.5" stroke-linecap="round"/>
-        <circle cx="50" cy="46" r="5" fill="#8a6fe0"/>
-        <circle cx="160" cy="55" r="5" fill="#8a6fe0"/>
-        <circle cx="285" cy="58" r="5" fill="#8a6fe0"/>
-        <circle cx="350" cy="18" r="6" fill="#E8B87A"/>
-        <circle cx="490" cy="30" r="5" fill="#8a6fe0"/>
-        <circle cx="620" cy="40" r="5" fill="#8a6fe0"/>
-        <defs><linearGradient id="wg" x1="50" y1="40" x2="650" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#4b2aa0"/><stop offset="0.55" stop-color="#8a6fe0"/><stop offset="1" stop-color="#E8B87A"/></linearGradient></defs>
+        <path d="M58 47 C111 47 122 58 175 58 C228 58 239 62 292 62 C344 62 356 10 408 10 C461 10 472 26 525 26 C578 26 589 39 642 39" stroke="url(#wg)" stroke-width="1.5" stroke-linecap="round"/>
+        <defs><linearGradient id="wg" x1="58" y1="40" x2="642" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#4b2aa0"/><stop offset="0.55" stop-color="#8a6fe0"/><stop offset="1" stop-color="#E8B87A"/></linearGradient></defs>
       </svg>
+      <span class="sched-wave-dot" style="left:8.33%; top:58.75%;"></span>
+      <span class="sched-wave-dot" style="left:25%; top:72.5%;"></span>
+      <span class="sched-wave-dot" style="left:41.67%; top:77.5%;"></span>
+      <span class="sched-wave-dot sched-wave-dot--gold" style="left:58.33%; top:12.5%;"></span>
+      <span class="sched-wave-dot" style="left:75%; top:32.5%;"></span>
+      <span class="sched-wave-dot" style="left:91.67%; top:48.75%;"></span>
     </div>
   </div>
 
@@ -1072,6 +1119,171 @@ html, body {
   </div>
 </section>
 
+<style>
+/* ── Повтор CTA перед футером ── */
+.footer-cta {
+  padding: 64px 20px 56px;
+  text-align: center;
+}
+.footer-cta__title {
+  font-family: "Stalinist One", sans-serif;
+  font-weight: normal;
+  font-size: clamp(1.4rem, 3.6vw, 2.1rem);
+  color: #E8C9A0;
+  margin: 0 0 10px;
+  letter-spacing: 0.02em;
+}
+.footer-cta__sub {
+  font-family: "Ubuntu", sans-serif;
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  margin: 0 0 26px;
+}
+.footer-cta__btn {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+  font-size: clamp(16px, 2vw, 20px);
+  cursor: pointer;
+  color: #241608;
+  background: #E8B87A;
+  border: 0;
+  border-radius: 50px;
+  padding: 18px 48px;
+  letter-spacing: 0.02em;
+  box-shadow: 0 0 36px rgba(232, 184, 122, 0.4);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+  text-decoration: none;
+  display: inline-block;
+}
+.footer-cta__btn:hover { transform: translateY(-2px); box-shadow: 0 0 56px rgba(232, 184, 122, 0.6); }
+
+/* ── Футер ── */
+.footer {
+  padding: 34px 24px 30px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  position: relative;
+}
+.footer__layout {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.footer__center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  text-align: center;
+}
+.footer__org {
+  font-family: "Ubuntu", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.82);
+  letter-spacing: 0.03em;
+}
+.footer__inn {
+  font-family: "Ubuntu", sans-serif;
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+}
+.footer__legal {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 4px;
+}
+.footer__legal-link {
+  font-family: "Ubuntu", sans-serif;
+  font-size: 12px;
+  color: rgba(255,255,255,0.42);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 200ms;
+}
+.footer__legal-link:hover { color: #E8C9A0; }
+
+.footer__side {
+  position: absolute;
+  top: 34px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+.footer__age {
+  font-family: "Teko", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.6);
+  border: 1.5px solid rgba(255,255,255,0.28);
+  border-radius: 6px;
+  padding: 2px 9px 0;
+  line-height: 1.4;
+}
+.footer .footer__social { display: flex; gap: 10px; }
+.footer .footer__link {
+  display: flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px;
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  transition: color 200ms;
+}
+.footer .footer__link svg { width: 18px; height: 18px; fill: currentColor; }
+.footer .footer__link:hover { color: #8a6fe0; }
+
+.footer__copy {
+  max-width: 1180px;
+  margin: 22px auto 0;
+  text-align: center;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 11px;
+  color: rgba(255,255,255,0.28);
+}
+
+@media (max-width: 700px) {
+  .footer__side {
+    position: static;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 20px;
+  }
+}
+</style>
+
+<div class="footer-cta">
+  <h2 class="footer-cta__title">До зари 313</h2>
+  <p class="footer-cta__sub">313 мест — успей взять себе</p>
+  <a class="footer-cta__btn" href="#waitlist">Купить билет</a>
+</div>
+
+<footer class="footer">
+  <div class="footer__layout">
+    <div class="footer__center">
+      <div class="footer__org">ООО «Арктик Эвент»</div>
+      <div class="footer__inn">ИНН 5190096762</div>
+      <div class="footer__legal">
+        <a class="footer__legal-link" href="privacy.html" target="_blank">Политика конфиденциальности</a>
+        <a class="footer__legal-link" href="offer.html" target="_blank">Публичная оферта</a>
+        <a class="footer__legal-link" href="assets/Правила_посещения.docx" download>Правила посещения</a>
+      </div>
+    </div>
+    <div class="footer__side">
+      <div class="footer__age">18+</div>
+      <div class="footer__social">
+        <a class="footer__link" href="https://t.me/portalshow2026" target="_blank" rel="noopener" aria-label="Telegram">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 13.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z"/></svg>
+        </a>
+        <a class="footer__link" href="https://vk.com/portalshow2026" target="_blank" rel="noopener" aria-label="ВКонтакте">
+          <svg viewBox="0 0 24 24"><path d="M12.785 16.241s.288-.032.436-.194c.136-.148.132-.427.132-.427s-.02-1.304.585-1.496c.598-.19 1.365 1.26 2.179 1.818.615.422 1.082.33 1.082.33l2.172-.03s1.136-.07.597-1.084c-.044-.078-.314-.666-1.617-1.883-1.362-1.271-1.18-1.065.46-3.263.998-1.333 1.397-2.147 1.272-2.495-.12-.332-.855-.244-.855-.244l-2.44.015s-.181-.025-.315.059c-.132.082-.216.272-.216.272s-.387 1.03-.903 1.906c-1.088 1.85-1.524 1.948-1.703 1.834-.414-.268-.31-1.077-.31-1.652 0-1.797.272-2.546-.528-2.743-.265-.064-.46-.106-1.138-.113-.869-.01-1.605.003-2.02.206-.277.136-.49.44-.36.457.161.021.525.098.718.362.248.341.239 1.107.239 1.107s.142 2.116-.332 2.378c-.325.18-.771-.187-1.728-1.866-.49-.848-.861-1.786-.861-1.786s-.071-.184-.2-.284c-.156-.12-.373-.158-.373-.158l-2.317.015s-.348.01-.475.161c-.113.135-.009.414-.009.414s1.813 4.238 3.864 6.376c1.882 1.958 4.022 1.83 4.022 1.83z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer__copy">© <span id="year">2026</span> До зари 313</div>
+</footer>
 
 </body>
 </html>
