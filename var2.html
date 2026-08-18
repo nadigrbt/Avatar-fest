@@ -201,21 +201,6 @@ body {
 .hero__date-day { color: #ffffff; font-weight: 600; text-shadow: 0 0 20px rgba(138,111,224,0.6); }
 .hero__date-venue { color: #ffffff; font-weight: 700; letter-spacing: 0.22em; text-shadow: 0 0 20px rgba(138,111,224,0.6); }
 
-.hero__countdown { display: flex; align-items: flex-end; justify-content: center; gap: 6px; margin-top: 28px; }
-.hero__countdown-unit { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.hero__countdown-num {
-  font-family: "Stalinist One", sans-serif; font-size: 48px; line-height: 1; color: #ffffff;
-  text-shadow: 0 0 20px rgba(138,111,224,0.6); min-width: 2ch; text-align: center;
-}
-.hero__countdown-label {
-  font-family: "Ubuntu", sans-serif; font-size: 11px; letter-spacing: 0.12em;
-  color: rgba(255,255,255,0.5); text-transform: uppercase;
-}
-.hero__countdown-sep {
-  font-family: "Stalinist One", sans-serif; font-size: 40px; color: rgba(138,111,224,0.5);
-  line-height: 1; padding-bottom: 18px;
-}
-
 .hero__price-line { margin-top: 22px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .hero__price-line .price-main { color: #ffffff; font-weight: 700; font-size: clamp(16px, 2vw, 20px); letter-spacing: 0.04em; }
 .hero__price-line .price-sub { font-family: "Ubuntu", sans-serif; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
@@ -381,7 +366,7 @@ body {
 }
 .reveal__item { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 6px; }
 .reveal__num {
-  font-family: "Stalinist One", sans-serif;
+  font-family: "Ubuntu", sans-serif;
   font-size: 22px;
   letter-spacing: 0.06em;
   color: rgba(255,255,255,0.4);
@@ -415,7 +400,7 @@ body {
 .reveal__item--gold .reveal__icon-glyph { color: #E8C9A0; }
 .reveal__item--neutral .reveal__icon-glyph { color: rgba(255,255,255,0.75); }
 .reveal__item-title {
-  font-family: "Stalinist One", sans-serif;
+  font-family: "Ubuntu", sans-serif;
   font-size: clamp(13px, 1.1vw, 16px);
   font-weight: normal;
   letter-spacing: 0.02em;
@@ -541,13 +526,13 @@ html, body {
 .sched-col:first-child { border-left: 1px solid rgba(138,111,224,0.18); }
 .sched-col__info { display: flex; flex-direction: column; gap: 6px; flex: 1; padding-bottom: 100px; }
 .sched-col__time {
-  font-family: "Stalinist One", sans-serif;
+  font-family: "Ubuntu", sans-serif;
   font-size: 26px; letter-spacing: 0.02em;
   color: #8a6fe0;
 }
 .sched-col--peak .sched-col__time { color: #E8B87A; }
 .sched-col__name {
-  font-family: "Stalinist One", sans-serif;
+  font-family: "Ubuntu", sans-serif;
   font-size: clamp(12px, 1vw, 15px);
   font-weight: normal;
   letter-spacing: 0.02em;
@@ -604,12 +589,12 @@ html, body {
   flex-shrink: 0;
 }
 .sched-row--peak .sched-row__dot { background: #E8B87A; box-shadow: 0 0 8px #E8B87A, 0 0 20px rgba(232,184,122,0.5); }
-.sched-row__time { flex-shrink: 0; width: 76px; font-family: "Stalinist One", sans-serif; font-size: 18px; color: rgba(255,255,255,0.92); }
+.sched-row__time { flex-shrink: 0; width: 76px; font-family: "Ubuntu", sans-serif; font-size: 18px; color: rgba(255,255,255,0.92); }
 .sched-row--peak .sched-row__time { color: #E8B87A; }
 .sched-row__sep { width: 1px; height: 40px; background: rgba(138,111,224,0.3); flex-shrink: 0; }
 .sched-row__body { flex: 1; min-width: 0; }
 .sched-row__name {
-  font-family: "Stalinist One", sans-serif; font-size: 14px; font-weight: normal;
+  font-family: "Ubuntu", sans-serif; font-size: 14px; font-weight: normal;
   letter-spacing: 0.02em; text-transform: uppercase; color: #fff; display: block;
 }
 .sched-row--peak .sched-row__name { color: #E8C9A0; }
@@ -709,16 +694,6 @@ html, body {
         </div>
       </div>
 
-      <div class="hero__countdown" id="heroCountdown">
-        <div class="hero__countdown-unit"><span class="hero__countdown-num" id="cdDays">--</span><span class="hero__countdown-label">дней</span></div>
-        <div class="hero__countdown-sep">:</div>
-        <div class="hero__countdown-unit"><span class="hero__countdown-num" id="cdHours">--</span><span class="hero__countdown-label">часов</span></div>
-        <div class="hero__countdown-sep">:</div>
-        <div class="hero__countdown-unit"><span class="hero__countdown-num" id="cdMins">--</span><span class="hero__countdown-label">минут</span></div>
-        <div class="hero__countdown-sep">:</div>
-        <div class="hero__countdown-unit"><span class="hero__countdown-num" id="cdSecs">--</span><span class="hero__countdown-label">секунд</span></div>
-      </div>
-
       <div class="hero__price-line">
         <span class="price-main">Вход от 5 500 ₽</span>
         <span class="price-sub">313 мест — успей взять себе</span>
@@ -730,25 +705,6 @@ html, body {
     </div>
   </div>
 </section>
-
-<script>
-(function(){
-  var DATES = [ new Date('2026-09-18T21:30:00+03:00') ];
-  var elD = document.getElementById('cdDays'), elH = document.getElementById('cdHours'), elM = document.getElementById('cdMins'), elS = document.getElementById('cdSecs');
-  function pad(n){ return n < 10 ? '0'+n : ''+n; }
-  function tick(){
-    var now = Date.now(), target = null;
-    for (var i = 0; i < DATES.length; i++) { if (DATES[i].getTime() > now) { target = DATES[i]; break; } }
-    if (!target) { document.getElementById('heroCountdown').style.display = 'none'; return; }
-    var diff = Math.max(0, Math.floor((target - now) / 1000));
-    elD.textContent = Math.floor(diff / 86400);
-    elH.textContent = pad(Math.floor((diff % 86400) / 3600));
-    elM.textContent = pad(Math.floor((diff % 3600) / 60));
-    elS.textContent = pad(diff % 60);
-  }
-  tick(); setInterval(tick, 1000);
-})();
-</script>
 
 <script>
 (function(){
