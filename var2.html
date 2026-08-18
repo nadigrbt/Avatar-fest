@@ -201,11 +201,11 @@ body {
 .hero__date-day { color: #ffffff; font-weight: 600; text-shadow: 0 0 20px rgba(138,111,224,0.6); }
 .hero__date-venue { color: #ffffff; font-weight: 700; letter-spacing: 0.22em; text-shadow: 0 0 20px rgba(138,111,224,0.6); }
 
-.hero__price-line { margin-top: 22px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.hero__price-line { margin-top: 22px; display: flex; flex-direction: column; align-items: center; gap: 22px; }
 .hero__price-line .price-main { color: #ffffff; font-weight: 700; font-size: clamp(16px, 2vw, 20px); letter-spacing: 0.04em; }
 .hero__price-line .price-sub { font-family: "Ubuntu", sans-serif; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
 
-.hero__actions { margin-top: 28px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.hero__actions { margin-top: 22px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
 .hero__invite-btn {
   font-family: "Ubuntu", sans-serif;
   font-weight: 700;
@@ -229,9 +229,9 @@ body {
 @media (max-width: 760px) {
   .hero__caption { padding-top: 80px; padding-bottom: max(80px, calc(env(safe-area-inset-bottom, 0px) + 80px)); }
   .hero__dates { margin-top: 16px; }
-  .hero__actions { margin-top: 18px; gap: 10px; }
+  .hero__actions { margin-top: 14px; gap: 10px; }
   .hero__invite-btn { padding: 15px 32px; font-size: 16px; width: min(360px, 100%); }
-  .hero__price-line { margin-top: 14px; }
+  .hero__price-line { margin-top: 14px; gap: 14px; }
   .hero__tagline { margin-top: 14px; font-size: 13px; line-height: 1.5; padding: 0 12px; }
   .hero__price-line .price-main { font-size: 15px; }
   .hero__price-line .price-sub { font-size: 10.5px; }
@@ -500,7 +500,7 @@ html, body {
   background: rgba(232,184,122,0.05);
 }
 .sched-prologue__time {
-  font-family: "Stalinist One", sans-serif;
+  font-family: "Ubuntu", sans-serif;
   font-size: 24px; letter-spacing: 0.02em;
   color: #E8B87A; flex-shrink: 0;
   min-width: 76px;
