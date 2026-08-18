@@ -364,7 +364,7 @@ body {
   gap: 8px;
   position: relative;
 }
-.reveal__item { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 6px; }
+.reveal__item { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 10px 6px 0; }
 .reveal__num {
   font-family: "Ubuntu", sans-serif;
   font-size: 22px;
@@ -719,12 +719,7 @@ html, body {
   var heroVideo = document.getElementById('hero-video');
   [heroVideo, brightVideo].forEach(function(v){
     if (!v) return;
-    if (reduceMotion) {
-      v.pause();
-      v.removeAttribute('autoplay');
-    } else {
-      v.play().catch(function(){ /* автоплей заблокирован — остаётся статичное фото под видео */ });
-    }
+    v.play().catch(function(){ /* автоплей заблокирован — остаётся статичное фото под видео */ });
   });
 
   function updateScrollDawn(){
@@ -830,105 +825,27 @@ html, body {
   <p class="reveal__sub">Не просто вечеринка — целая история.<br>От сумерек до первого света. 313 гостей. Один выпуск.</p>
 
   <div class="reveal__grid">
-    <div class="reveal__item">
-      <span class="reveal__num">01</span>
-      <div class="reveal__icon-wrap">
-        <svg class="reveal__icon-ring" viewBox="0 0 92 92"><circle class="reveal__icon-ring-line" cx="46" cy="46" r="45"/><circle class="reveal__icon-ring-dot" cx="78" cy="14" r="2.6"/></svg>
-        <svg class="reveal__icon-glyph" viewBox="0 0 48 52" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="17" cy="12" r="5"/>
-          <circle cx="31" cy="12" r="5"/>
-          <path d="M8 30c0-6 4-10 9-10s9 4 9 10"/>
-          <path d="M22 30c0-6 4-10 9-10s9 4 9 10"/>
-          <text x="24" y="46" text-anchor="middle" font-family="'Stalinist One',sans-serif" font-size="12" font-weight="normal" stroke="none" fill="currentColor" letter-spacing="0.5">313</text>
-        </svg>
-      </div>
-      <h3 class="reveal__item-title">313 гостей</h3>
+    <div class="reveal__item">      <h3 class="reveal__item-title">313 гостей</h3>
       <p class="reveal__item-desc">Ограниченный формат создаёт камерную атмосферу и особое окружение.</p>
     </div>
 
-    <div class="reveal__item">
-      <span class="reveal__num">02</span>
-      <div class="reveal__icon-wrap">
-        <svg class="reveal__icon-ring" viewBox="0 0 92 92"><circle class="reveal__icon-ring-line" cx="46" cy="46" r="45"/><circle class="reveal__icon-ring-dot" cx="78" cy="14" r="2.6"/></svg>
-        <svg class="reveal__icon-glyph" viewBox="0 0 48 48" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M30 8c-8 2-14 9-14 17.5S22 43 30 40.5C24 38 20 32 20 25.5S24 13 30 8z" fill="currentColor" fill-opacity="0.18"/>
-          <path d="M30 8c-8 2-14 9-14 17.5S22 43 30 40.5C24 38 20 32 20 25.5S24 13 30 8z" fill="none"/>
-          <path d="M25 15c-3 3-5 6.5-5 10.5s2 7.5 5 10.5" fill="none" stroke-width="1" opacity="0.5"/>
-          <circle cx="34" cy="34" r="1.8" fill="currentColor" stroke="none" opacity="0.85"/>
-        </svg>
-      </div>
-      <h3 class="reveal__item-title">Первый свет</h3>
+    <div class="reveal__item">      <h3 class="reveal__item-title">Первый свет</h3>
       <p class="reveal__item-desc">Ночь развивается как единый сценарий — от сумерек к рассвету.</p>
     </div>
 
-    <div class="reveal__item">
-      <span class="reveal__num">03</span>
-      <div class="reveal__icon-wrap">
-        <svg class="reveal__icon-ring" viewBox="0 0 92 92"><circle class="reveal__icon-ring-line" cx="46" cy="46" r="45"/><circle class="reveal__icon-ring-dot" cx="78" cy="14" r="2.6"/></svg>
-        <svg class="reveal__icon-glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-          <line x1="10" y1="20" x2="10" y2="28"/>
-          <line x1="17" y1="14" x2="17" y2="34"/>
-          <line x1="24" y1="8" x2="24" y2="40"/>
-          <line x1="31" y1="14" x2="31" y2="34"/>
-          <line x1="38" y1="20" x2="38" y2="28"/>
-        </svg>
-      </div>
-      <h3 class="reveal__item-title">Ритм ночи</h3>
+    <div class="reveal__item">      <h3 class="reveal__item-title">Ритм ночи</h3>
       <p class="reveal__item-desc">Organic, deep, melodic, afro, progressive. Живой оркестр и уникальные музыкальные моменты.</p>
     </div>
 
-    <div class="reveal__item">
-      <span class="reveal__num">04</span>
-      <div class="reveal__icon-wrap">
-        <svg class="reveal__icon-ring" viewBox="0 0 92 92"><circle class="reveal__icon-ring-line" cx="46" cy="46" r="45"/><circle class="reveal__icon-ring-dot" cx="78" cy="14" r="2.6"/></svg>
-        <svg class="reveal__icon-glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="24" cy="24" r="3" fill="currentColor" stroke="none"/>
-          <path d="M24 21c-2-5-1-10 2-14"/>
-          <path d="M24 21c3-4 8-5 12-3"/>
-          <path d="M27 24c5-1 9 1 12 5"/>
-          <path d="M27 27c3 4 3 9 1 13"/>
-          <path d="M21 27c-4 2-6 6-6 11"/>
-          <path d="M21 24c-5-1-9-4-11-9"/>
-          <path d="M21 21c-3-3-4-7-3-11"/>
-          <circle cx="26" cy="7" r="1.4" fill="currentColor" stroke="none"/>
-          <circle cx="36" cy="18" r="1.4" fill="currentColor" stroke="none"/>
-          <circle cx="39" cy="29" r="1.4" fill="currentColor" stroke="none"/>
-          <circle cx="28" cy="40" r="1.4" fill="currentColor" stroke="none"/>
-          <circle cx="15" cy="38" r="1.4" fill="currentColor" stroke="none"/>
-          <circle cx="9" cy="26" r="1.4" fill="currentColor" stroke="none"/>
-          <circle cx="16" cy="9" r="1.4" fill="currentColor" stroke="none"/>
-        </svg>
-      </div>
-      <h3 class="reveal__item-title">Пространство</h3>
+    <div class="reveal__item">      <h3 class="reveal__item-title">Пространство</h3>
       <p class="reveal__item-desc">Биоморфные инсталляции, свет, дым и проекции — пространство меняется вместе с ночью.</p>
     </div>
 
-    <div class="reveal__item reveal__item--gold">
-      <span class="reveal__num">05</span>
-      <div class="reveal__icon-wrap">
-        <svg class="reveal__icon-ring" viewBox="0 0 92 92"><circle class="reveal__icon-ring-line" cx="46" cy="46" r="45"/><circle class="reveal__icon-ring-dot" cx="78" cy="14" r="2.6"/></svg>
-        <svg class="reveal__icon-glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
-          <path d="M24 6l10 10-10 26L14 16z"/>
-          <path d="M14 16h20M24 6l-5 10h10z"/>
-        </svg>
-      </div>
-      <h3 class="reveal__item-title">Сервис</h3>
+    <div class="reveal__item reveal__item--gold">      <h3 class="reveal__item-title">Сервис</h3>
       <p class="reveal__item-desc">Комфорт, внимание к деталям и отсутствие очередей. Вы отдыхаете — мы заботимся обо всём.</p>
     </div>
 
-    <div class="reveal__item reveal__item--gold">
-      <span class="reveal__num">06</span>
-      <div class="reveal__icon-wrap">
-        <svg class="reveal__icon-ring" viewBox="0 0 92 92"><circle class="reveal__icon-ring-line" cx="46" cy="46" r="45"/><circle class="reveal__icon-ring-dot" cx="78" cy="14" r="2.6"/></svg>
-        <svg class="reveal__icon-glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
-          <path d="M12 30a12 12 0 0 1 24 0"/>
-          <line x1="6" y1="30" x2="42" y2="30"/>
-          <line x1="24" y1="10" x2="24" y2="15"/>
-          <line x1="12" y1="14" x2="15" y2="17"/>
-          <line x1="36" y1="14" x2="33" y2="17"/>
-        </svg>
-      </div>
-      <h3 class="reveal__item-title">Первый свет</h3>
+    <div class="reveal__item reveal__item--gold">      <h3 class="reveal__item-title">Первый свет</h3>
       <p class="reveal__item-desc">Кофе, первые лучи солнца и финальные минуты ночи, которые останутся с вами надолго.</p>
     </div>
   </div>
