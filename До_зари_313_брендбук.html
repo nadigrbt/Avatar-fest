@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>До зари 313 — Брендбук</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Stalinist+One&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --purple:#8a6fe0; --purple-deep:#4b2aa0;
+    --gold:#E8C9A0; --gold-bright:#E8B87A;
+    --bg:#0a0a0d;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:#fff;font-family:"Ubuntu",sans-serif;line-height:1.6}
+
+  .sec{max-width:1040px;margin:0 auto;padding:90px 24px}
+  .sec + .sec{border-top:1px solid rgba(255,255,255,0.08)}
+  .eyebrow{
+    font-family:"Ubuntu",sans-serif;font-size:13px;letter-spacing:.28em;text-transform:uppercase;
+    color:rgba(216,200,250,.75); margin:0 0 14px;
+  }
+  h1{font-family:"Stalinist One",sans-serif;font-weight:normal;text-transform:uppercase;
+    font-size:clamp(2rem,6vw,3.4rem);line-height:1.2;color:var(--gold);margin:0 0 18px;letter-spacing:.02em}
+  h2{font-family:"Stalinist One",sans-serif;font-weight:normal;text-transform:uppercase;
+    font-size:clamp(1.4rem,3.4vw,2rem);line-height:1.25;color:var(--gold);margin:0 0 26px;letter-spacing:.02em}
+  h3{font-family:"Stalinist One",sans-serif;font-weight:normal;font-size:16px;letter-spacing:.04em;
+    text-transform:uppercase;color:#fff;margin:0 0 10px}
+  p{color:rgba(255,255,255,.78);font-size:15px;max-width:680px}
+  .lead{font-size:17px;color:rgba(255,255,255,.88);max-width:640px}
+
+  /* Cover */
+  .cover{
+    min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:60px 24px;position:relative;overflow:hidden;
+  }
+  .cover::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(circle at 50% 30%, rgba(138,111,224,.25) 0%, rgba(10,10,13,0) 55%),
+               radial-gradient(circle at 50% 85%, rgba(232,184,122,.15) 0%, rgba(10,10,13,0) 60%);
+    pointer-events:none;
+  }
+  .cover__eyebrow{position:relative;font-family:"Ubuntu",sans-serif;font-size:14px;letter-spacing:.32em;
+    text-transform:uppercase;color:rgba(216,200,250,.8);margin:0 0 22px}
+  .cover__title{position:relative;font-family:"Stalinist One",sans-serif;font-weight:normal;text-transform:uppercase;
+    font-size:clamp(3rem,10vw,6rem);line-height:1.05;color:var(--gold);margin:0 0 20px;
+    text-shadow:0 0 60px rgba(232,184,122,.35)}
+  .cover__sub{position:relative;font-family:"Ubuntu",sans-serif;font-size:16px;color:rgba(255,255,255,.6);
+    max-width:520px;margin:0 auto}
+  .cover__date{position:relative;margin-top:40px;font-family:"Stalinist One",sans-serif;font-size:13px;
+    letter-spacing:.1em;color:rgba(255,255,255,.35);text-transform:uppercase}
+
+  /* Concept quote blocks */
+  .quote{
+    border-left:2px solid var(--purple); padding:4px 0 4px 22px; margin:22px 0;
+    font-family:"Ubuntu",sans-serif; font-style:italic; color:rgba(255,255,255,.9); font-size:16px;
+  }
+
+  /* Color swatches */
+  .swatch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:28px}
+  .swatch{border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
+  .swatch__fill{height:110px}
+  .swatch__meta{padding:14px 16px;background:rgba(255,255,255,.03)}
+  .swatch__name{font-family:"Stalinist One",sans-serif;font-weight:normal;font-size:15px;letter-spacing:.02em;
+    text-transform:uppercase;color:#fff;margin:0 0 4px}
+  .swatch__hex{font-family:"Ubuntu",monospace;font-size:12px;color:rgba(255,255,255,.5);margin:0}
+  .swatch__use{font-size:12px;color:rgba(255,255,255,.4);margin:6px 0 0}
+
+  /* Typography specimens */
+  .type-card{padding:26px 24px;border:1px solid rgba(255,255,255,.08);border-radius:12px;margin-bottom:18px;background:rgba(255,255,255,.02)}
+  .type-card__label{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px}
+  .type-card__name{font-family:"Ubuntu",sans-serif;font-weight:700;font-size:14px;color:var(--gold);letter-spacing:.06em;text-transform:uppercase}
+  .type-card__role{font-family:"Ubuntu",sans-serif;font-size:12px;color:rgba(255,255,255,.45)}
+  .type-card__sample-1{font-family:"Stalinist One",sans-serif;font-size:34px;text-transform:uppercase;color:#fff;margin:0 0 8px;line-height:1.2}
+  
+  .type-card__sample-3{font-family:"Ubuntu",sans-serif;font-size:16px;color:rgba(255,255,255,.85);margin:0}
+  .type-card__note{font-size:12px;color:rgba(255,255,255,.4);margin-top:12px}
+
+  /* Voice examples */
+  .voice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:24px}
+  .voice-card{padding:20px 22px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}
+  .voice-card__tag{font-family:"Ubuntu",sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--purple);margin:0 0 10px}
+  .voice-card__text{font-family:"Ubuntu",sans-serif;font-size:15px;color:#fff;margin:0;line-height:1.5}
+
+  /* Icon style demo */
+  .icon-demo{display:flex;gap:36px;flex-wrap:wrap;margin-top:28px;align-items:flex-start}
+  .icon-demo__wrap{width:92px;height:92px;position:relative;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .icon-demo__ring{position:absolute;inset:0;width:100%;height:100%}
+  .icon-demo__ring circle.line{fill:none;stroke:var(--purple);stroke-width:1;stroke-dasharray:1 5;stroke-linecap:round;opacity:.65}
+  .icon-demo__ring circle.dot{fill:var(--purple);filter:drop-shadow(0 0 4px var(--purple))}
+  .icon-demo--gold .icon-demo__ring circle.line{stroke:var(--gold-bright)}
+  .icon-demo--gold .icon-demo__ring circle.dot{fill:var(--gold-bright);filter:drop-shadow(0 0 4px var(--gold-bright))}
+  .icon-demo__glyph{width:36px;height:36px;color:#a99bdb}
+  .icon-demo--gold .icon-demo__glyph{color:var(--gold)}
+
+  /* Gradient line demo */
+  .wave-demo{margin-top:28px;height:50px}
+  .wave-demo svg{width:100%;height:100%}
+
+  /* Glow demo */
+  .glow-demo{
+    margin-top:28px;height:160px;border-radius:14px;position:relative;overflow:hidden;
+    background:#000; border:1px solid rgba(255,255,255,.08);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .glow-demo::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(circle 200px at 50% 50%, rgba(232,201,160,.9) 0%, rgba(232,184,122,.3) 40%, rgba(232,184,122,0) 72%);
+    opacity:.8;
+  }
+  .glow-demo span{position:relative;font-family:"Stalinist One",sans-serif;font-size:12px;letter-spacing:.06em;
+    text-transform:uppercase;color:rgba(255,255,255,.7)}
+
+  /* UI components */
+  .ui-row{display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin-top:24px}
+  .btn-demo{
+    font-family:"Ubuntu",sans-serif;font-weight:700;font-size:16px;color:#241608;
+    background:var(--gold-bright);border:0;border-radius:50px;padding:16px 40px;letter-spacing:.02em;
+    box-shadow:0 0 36px rgba(232,184,122,.4); display:inline-block;
+  }
+  .badge-demo{
+    font-family:"Stalinist One",sans-serif;font-size:14px;font-weight:normal;color:rgba(255,255,255,.7);
+    border:1.5px solid rgba(255,255,255,.32);border-radius:6px;padding:4px 12px 1px;
+  }
+  .tag-demo{
+    font-family:"Ubuntu",sans-serif;font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--gold);border:1.5px solid rgba(232,201,160,.5);border-radius:50px;padding:10px 26px;
+  }
+
+  /* Do / Don't */
+  .dd-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px}
+  .dd-card{padding:20px 22px;border-radius:12px;border:1px solid}
+  .dd-card--do{background:rgba(138,111,224,.06);border-color:rgba(138,111,224,.35)}
+  .dd-card--dont{background:rgba(255,90,90,.05);border-color:rgba(255,90,90,.28)}
+  .dd-card h3{margin-bottom:12px}
+  .dd-card--do h3{color:var(--purple)}
+  .dd-card--dont h3{color:#ff8a8a}
+  .dd-card ul{margin:0;padding-left:18px}
+  .dd-card li{color:rgba(255,255,255,.75);font-size:14px;margin-bottom:8px;line-height:1.5}
+  @media (max-width:640px){ .dd-grid{grid-template-columns:1fr} }
+
+  .footer-note{text-align:center;padding:60px 24px;color:rgba(255,255,255,.3);font-size:12px}
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <p class="cover__eyebrow">Брендбук</p>
+  <h1 class="cover__title">До зари 313</h1>
+  <p class="cover__sub">Закрытая ночная серия: танцпол, музыка и путь от сумерек к первому свету — для тех, кто ценит атмосферу и детали.</p>
+  <p class="cover__date">Версия от 13 августа 2026</p>
+</section>
+
+<section class="sec">
+  <p class="eyebrow">01 — Концепция</p>
+  <h2>Ночь как единая история</h2>
+  <p class="lead">«До зари 313» — не рядовая вечеринка, а закрытая ночная серия на 313 гостей, выстроенная как один драматургический путь: от встречи сумерек в 21:30 до первого света в 05:13. Каждый час ночи — свой акт, своя кульминация, свой свет.</p>
+  <div class="quote">Не массовость, а формат. Не набор активностей, а драматургия одной ночи.</div>
+  <p><b>Позиционирование:</b> премиальный клубный формат для гостей, которые выбирают качество и сервис, а не толпу — при этом это в первую очередь танцевальная вечеринка с живым диджей-сетом и танцполом, а не камерный вечер или перформанс.</p>
+  <p><b>Аудитория:</b> взрослая, платёжеспособная, ценящая атмосферу и детали; ходит на закрытые/премиальные ивенты осознанно, а не случайно.</p>
+  <p><b>Сюжетная арка бренда:</b> ночь → рассвет. Это главная метафора, которая пронизывает всё: цвета (фиолетовый ночи → золото зари), тайминг программы, копирайтинг, визуальный градиент в декоративных элементах.</p>
+</section>
+
+<section class="sec">
+  <p class="eyebrow">02 — Логотип</p>
+  <h2>Название и написание</h2>
+  <p class="lead">Логотип — текстовый, всегда в двух строках: «До зари» и акцентный номер «313» под ним, шрифтом Stalinist One, заглавными буквами.</p>
+  <div style="margin:32px 0;padding:40px;text-align:center;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:12px;">
+    <div style="font-family:'Stalinist One',sans-serif;font-size:clamp(28px,7vw,52px);line-height:1.15;color:#fff;text-transform:uppercase;">До зари<br><span style="color:var(--gold);">313</span></div>
+  </div>
+
+  <h3 style="margin-top:8px;">Альтернативная вертикальная связка</h3>
+  <p>Для обложек соцсетей, аватарок и мест, где горизонтальный лого-блок не помещается — вертикальная связка «До / Зари» с тизлайном ниже. Тот же принцип: только Stalinist One для названия, Ubuntu — для тизлайна, разрядка широкая.</p>
+  <div style="margin:20px 0 32px;padding:50px 20px;text-align:center;background:#000;border:1px solid rgba(255,255,255,.08);border-radius:12px;">
+    <div style="font-family:'Stalinist One',sans-serif;font-weight:normal;font-size:clamp(30px,9vw,64px);line-height:0.95;color:#fff;text-transform:uppercase;letter-spacing:.04em;">До<br>Зари</div>
+    <div style="margin-top:18px;font-family:'Ubuntu',sans-serif;font-weight:500;font-size:clamp(11px,1.6vw,15px);letter-spacing:.32em;text-transform:uppercase;color:#9BB4E8;">Музыка <span style="opacity:.7;letter-spacing:0;">·</span> Ночь <span style="opacity:.7;letter-spacing:0;">·</span> Свет</div>
+  </div>
+  <p class="type-card__note" style="margin:-16px 0 24px;">Цвет букв можно менять по фону: белый на чёрном фоне (основной вариант) или золото <span style="color:var(--gold-bright)">#E8B87A</span> на чёрном/белом фоне — тизлайн остаётся тем же голубоватым акцентом.</p>
+
+  <div class="dd-grid">
+    <div class="dd-card dd-card--do">
+      <h3>Можно</h3>
+      <ul>
+        <li>Использовать только на тёмном фоне (чёрный / почти чёрный)</li>
+        <li>Оставлять свободное пространство вокруг названия — не прижимать к краям и другим элементам</li>
+        <li>Использовать связку «До зари» + «313» как единый блок</li>
+      </ul>
+    </div>
+    <div class="dd-card dd-card--dont">
+      <h3>Нельзя</h3>
+      <ul>
+        <li>Менять шрифт логотипа на другой</li>
+        <li>Растягивать, сжимать или наклонять текст</li>
+        <li>Использовать «313» отдельно от «До зари» как самостоятельный лого-элемент</li>
+        <li>Ставить на светлый/белый фон без адаптации палитры</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <p class="eyebrow">03 — Цвет</p>
+  <h2>Ночь и рассвет</h2>
+  <p class="lead">Палитра строится на переходе от фиолетового (ночь) к золотому (рассвет) — визуальная метафора сюжетной арки бренда. Фон всегда тёмный, мягкий чёрный, а не чистый #000.</p>
+  <div class="swatch-grid">
+    <div class="swatch">
+      <div class="swatch__fill" style="background:#0a0a0d;"></div>
+      <div class="swatch__meta">
+        <p class="swatch__name">Фон</p>
+        <p class="swatch__hex">#0A0A0D</p>
+        <p class="swatch__use">Базовый фон всех экранов</p>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__fill" style="background:#8a6fe0;"></div>
+      <div class="swatch__meta">
+        <p class="swatch__name">Фиолетовый</p>
+        <p class="swatch__hex">#8A6FE0</p>
+        <p class="swatch__use">Ночь — акцент, свечения, точки на линии</p>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__fill" style="background:#4b2aa0;"></div>
+      <div class="swatch__meta">
+        <p class="swatch__name">Глубокий фиолетовый</p>
+        <p class="swatch__hex">#4B2AA0</p>
+        <p class="swatch__use">Тени, начало градиентов</p>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__fill" style="background:#E8C9A0;"></div>
+      <div class="swatch__meta">
+        <p class="swatch__name">Бледное золото</p>
+        <p class="swatch__hex">#E8C9A0</p>
+        <p class="swatch__use">Заголовки блоков, логотип</p>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__fill" style="background:#E8B87A;"></div>
+      <div class="swatch__meta">
+        <p class="swatch__name">Яркое золото</p>
+        <p class="swatch__hex">#E8B87A</p>
+        <p class="swatch__use">Кнопки, CTA, финал ночи (рассвет)</p>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__fill" style="background:#fff;"></div>
+      <div class="swatch__meta">
+        <p class="swatch__name">Белый / текст</p>
+        <p class="swatch__hex">#FFFFFF</p>
+        <p class="swatch__use">Основной текст, с прозрачностью 55–90%</p>
+      </div>
+    </div>
+  </div>
+  <p style="margin-top:24px;font-size:13px;color:rgba(255,255,255,.4);">Правило перехода: фиолетовый — начало ночи и середина программы, золото — кульминация и рассвет. В любом градиенте фиолетовый всегда идёт первым (слева/сверху), золото — последним.</p>
+</section>
+
+<section class="sec">
+  <p class="eyebrow">04 — Типографика</p>
+  <h2>Два шрифта, две роли</h2>
+
+  <div class="type-card">
+    <div class="type-card__label">
+      <span class="type-card__name">Stalinist One</span>
+      <span class="type-card__role">Заголовки, логотип</span>
+    </div>
+    <p class="type-card__sample-1">До зари 313</p>
+    <p class="type-card__note">Только заглавные буквы, одно начертание (normal). Название/логотип, заголовки секций (H1/H2), короткая акцентная подпись «18+». Не используется для чисел, тайминга и подписей внутри карточек — там теперь Ubuntu (см. ниже).</p>
+  </div>
+
+  <div class="type-card">
+    <div class="type-card__label">
+      <span class="type-card__name">Ubuntu</span>
+      <span class="type-card__role">Основной текст, числа, тайминг, подписи карточек</span>
+    </div>
+    <p class="type-card__sample-3">Танцпол и музыка для тех, кто ценит атмосферу и детали.</p>
+    <p class="type-card__sample-1" style="font-family:'Ubuntu',sans-serif;font-size:26px;margin-top:10px;">21:30 · 01:30 · 05:13</p>
+    <p class="type-card__note">Начертания 400/500/700. Весь описательный текст, кнопки с текстом, eyebrow-подписи (uppercase, letter-spacing 0.2–0.3em) — и, начиная с последней ревизии, тайминг программы, номера карточек («01–06») и названия этапов ночи («Встреча сумерек», «Ключ 313» и т.д.). Stalinist One на мелких плотных элементах читался тяжело, поэтому эти места перевели на Ubuntu.</p>
+  </div>
+</section>
+
+<section class="sec">
+  <p class="eyebrow">05 — Голос бренда</p>
+  <h2>Как мы говорим</h2>
+  <p class="lead">Коротко, по делу, без пафоса и заезженных клише про «незабываемые эмоции». Тон — уверенный, слегка сдержанный, как у бренда, которому не нужно ничего доказывать. Всегда конкретика (время, цифры, факты) вместо общих слов.</p>
+  <div class="voice-grid">
+    <div class="voice-card"><p class="voice-card__tag">Хедлайн</p><p class="voice-card__text">Танцпол и музыка для тех, кто ценит атмосферу и детали</p></div>
+    <div class="voice-card"><p class="voice-card__tag">Дефицит</p><p class="voice-card__text">313 мест — успей взять себе</p></div>
+    <div class="voice-card"><p class="voice-card__tag">Закрытие</p><p class="voice-card__text">Одна ночь. Одна история. До зари.</p></div>
+    <div class="voice-card"><p class="voice-card__tag">Описание акта</p><p class="voice-card__text">Ночь достигает своей первой точки невозврата.</p></div>
+  </div>
+  <p style="margin-top:24px;"><b>Избегаем:</b> восклицательных знаков, слов «незабываемо/эксклюзивно/уникально» без подкрепления фактом, длинных предложений с деепричастными оборотами, английских вставок без необходимости.</p>
+</section>
+
+<section class="sec">
+  <p class="eyebrow">06 — Иконография и графика</p>
+  <h2>Линия ночи</h2>
+  <h3>Волнистая линия-соединитель</h3>
+  <p>Используется как визуальный «пульс ночи» между блоками программы — плавная, изгибистая, с градиентом от фиолетового к золоту и точками-маркерами в узлах.</p>
+  <div class="wave-demo">
+    <svg viewBox="0 0 700 60" fill="none">
+      <path d="M20 30 C70 30 80 45 130 45 C180 45 190 15 240 15 C290 15 300 50 350 50 C400 50 410 10 460 10 C510 10 520 35 570 35 C610 35 630 25 680 28" stroke="url(#bg)" stroke-width="2" stroke-linecap="round"/>
+      <defs><linearGradient id="bg" x1="20" y1="0" x2="680" y2="0"><stop stop-color="#4b2aa0"/><stop offset=".55" stop-color="#8a6fe0"/><stop offset="1" stop-color="#E8B87A"/></linearGradient></defs>
+    </svg>
+  </div>
+
+  <h3 style="margin-top:40px;">Свечение-прожектор</h3>
+  <p>Мягкое золотое свечение, следующее за курсором/пальцем — фирменный интерактивный элемент, отсылка к «первому свету». Не заменяется резкими тенями или неоновыми обводками.</p>
+  <div class="glow-demo"><span>наведи курсор ощущение</span></div>
+</section>
+
+<section class="sec">
+  <p class="eyebrow">07 — Фото и видео</p>
+  <h2>Что снимаем</h2>
+  <p class="lead">Съёмка — настоящий клубный свет и атмосфера, а не постановочные стоковые кадры. Обязательно должны читаться танцпол, диджей, толпа в движении — иначе формат вечеринки не считывается с одних фото.</p>
+  <p>Текущие фото и видео материалы — с мероприятия «Аватар». Фото: Хинаров М.М., Смолякова М.В. Видео: Доронкин Н.Н., Емелев А.В. Источник указывается в подвале сайта.</p>
+  <h3 style="margin-top:32px;">Видео на первом экране</h3>
+  <p>Хиро-блок сайта — не статичное фото, а фоновое видео (приглушённая яркость, тёплая полупрозрачная плёнка сверху). Курсор/палец создают золотистый «прожектор»: в его области видео становится заметно ярче и чётче — деталь, отсылающая к «первому свету» концепции.</p>
+  <div class="dd-grid">
+    <div class="dd-card dd-card--do">
+      <h3>Снимаем</h3>
+      <ul>
+        <li>Танцпол, диджей-пульт, живых исполнителей в момент выступления</li>
+        <li>Фиолетовый/тёплый клубный свет, дым, силуэты в движении</li>
+        <li>Биоморфные декорации и инсталляции крупным планом</li>
+        <li>Момент рассвета/первого света в конце ночи — как визуальную рифму к концепции</li>
+      </ul>
+    </div>
+    <div class="dd-card dd-card--dont">
+      <h3>Не снимаем / не используем</h3>
+      <ul>
+        <li>Постановочные студийные кадры без атмосферы площадки</li>
+        <li>Старую айдентику и любые упоминания прежних брендов на фото (одежда, баннеры)</li>
+        <li>Дневной свет, офисные/повседневные локации</li>
+        <li>Плоский фронтальный свет без цветовых акцентов</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <p class="eyebrow">08 — UI-компоненты</p>
+  <h2>Кнопки, бейджи, теги</h2>
+  <div class="ui-row">
+    <a class="btn-demo">Купить билет</a>
+    <span class="badge-demo">18+</span>
+    <span class="tag-demo">Ещё</span>
+  </div>
+  <p style="margin-top:20px;">Основная кнопка — всегда золотая пилюля с тёмным текстом и мягким свечением. Бейджи (18+, счётчики) — тонкая обводка без заливки. Вторичные кнопки/теги — обводка золотом на прозрачном фоне.</p>
+</section>
+
+<div class="footer-note">До зари 313 · Брендбук · внутренний документ проекта</div>
+
+</body>
+</html>
