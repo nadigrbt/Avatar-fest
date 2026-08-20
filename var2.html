@@ -3,10 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="shortcut icon" href="assets/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Stalinist+One&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
-<title>До зари 313 — первый блок (черновик)</title>
+<title>До зари 313 — закрытая ночная вечеринка в Москве, 3 октября</title>
+<meta name="description" content="Музыка с собственной драматургией, впечатляющие декорации и всего 313 гостей. Одна ночь – от первых сумерек до первого света.">
+<link rel="canonical" href="https://dozary.ru/">
+<meta property="og:title" content="До зари 313 — ночная вечеринка в Москве">
+<meta property="og:description" content="Музыка с собственной драматургией, впечатляющие декорации и всего 313 гостей. Одна ночь – от первых сумерек до первого света.">
+<meta property="og:url" content="https://dozary.ru/">
+<meta property="og:image" content="https://dozary.ru/assets/logo-final.png">
+<meta property="og:image:width" content="3600">
+<meta property="og:image:height" content="2700">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
 
 <style>
 
@@ -640,6 +656,19 @@ html, body {
 </style>
 </head>
 <body>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=111808027', 'ym');
+    ym(111808027, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/111808027" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
 
 <section class="hero" aria-label="Главный экран">
   <video class="hero__video" id="hero-video" autoplay muted loop playsinline aria-hidden="true">
@@ -668,7 +697,7 @@ html, body {
       <p class="hero__eyebrow">Серия вечеринок</p>
       <h1 class="hero__avatar-title">
         <span class="hero__avatar-text"><span class="hero__avatar-text-main">До зари</span><span class="hero__avatar-text-sub">313</span></span>
-        <span class="visually-hidden">До зари 313 — серия вечеринок в Москве, 18 сентября</span>
+        <span class="visually-hidden">До зари 313 — серия вечеринок в Москве, 3 октября</span>
       </h1>
 
       <p class="hero__tagline">Танцпол и музыка для тех, кто ценит атмосферу и детали</p>
@@ -677,9 +706,7 @@ html, body {
         <div class="hero__date-row">
           <span class="hero__date-city">Москва</span>
           <span class="hero__date-sep hero__date-sep--line" aria-hidden="true"></span>
-          <span class="hero__date-day">18 сентября</span>
-          <span class="hero__date-sep hero__date-sep--line" aria-hidden="true"></span>
-          <span class="hero__date-venue">BASE</span>
+          <span class="hero__date-day">3 октября</span>
         </div>
       </div>
 
@@ -689,7 +716,7 @@ html, body {
       </div>
 
       <div class="hero__actions">
-        <a class="hero__invite-btn" href="#waitlist">Купить билет</a>
+        <a class="hero__invite-btn" href="#waitlist">Билеты скоро</a>
       </div>
     </div>
   </div>
@@ -1135,9 +1162,9 @@ html, body {
 .footer__center {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 7px;
-  text-align: center;
+  text-align: left;
 }
 .footer__org {
   font-family: "Ubuntu", sans-serif;
@@ -1155,7 +1182,7 @@ html, body {
   display: flex;
   gap: 18px;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: 4px;
 }
 .footer__legal-link {
@@ -1201,7 +1228,7 @@ html, body {
 .footer__copy {
   max-width: 1180px;
   margin: 22px auto 0;
-  text-align: center;
+  text-align: left;
   font-family: "Ubuntu", sans-serif;
   font-size: 11px;
   color: rgba(255,255,255,0.28);
@@ -1209,7 +1236,7 @@ html, body {
 .footer__credits {
   max-width: 1180px;
   margin: 6px auto 0;
-  text-align: center;
+  text-align: left;
   font-family: "Ubuntu", sans-serif;
   font-size: 11px;
   color: rgba(255,255,255,0.28);
@@ -1229,7 +1256,7 @@ html, body {
 <div class="footer-cta">
   <h2 class="footer-cta__title">До зари 313</h2>
   <p class="footer-cta__sub">313 мест — успей взять себе</p>
-  <a class="footer-cta__btn" href="#waitlist">Купить билет</a>
+  <a class="footer-cta__btn" href="#waitlist">Билеты скоро</a>
 </div>
 
 <footer class="footer">
@@ -1257,6 +1284,77 @@ html, body {
   <div class="footer__copy">© <span id="year">2026</span> До зари 313</div>
   <div class="footer__credits">Фото и видео — с мероприятия «Аватар». Фото: Хинаров М.М., Смолякова М.В. · Видео: Доронкин Н.Н., Емелев А.В.</div>
 </footer>
+
+<style>
+.cookie-banner {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 9999;
+  background: rgba(10,10,13,0.97);
+  border-top: 1px solid rgba(138,111,224,0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  transform: translateY(100%);
+  transition: transform 0.4s ease;
+  pointer-events: none;
+}
+.cookie-banner.is-visible { transform: translateY(0); pointer-events: auto; }
+.cookie-banner__text {
+  font-family: "Ubuntu", sans-serif;
+  font-size: 13px;
+  color: rgba(255,255,255,0.75);
+  max-width: 640px;
+  line-height: 1.5;
+  margin: 0;
+}
+.cookie-banner__text a { color: #8a6fe0; }
+.cookie-banner__btn {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: #241608;
+  background: #E8B87A;
+  border: 0;
+  border-radius: 50px;
+  padding: 10px 26px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.cookie-banner__btn:hover { box-shadow: 0 0 24px rgba(232,184,122,0.5); }
+@media (max-width: 600px) {
+  .cookie-banner { flex-direction: column; text-align: center; padding: 16px 18px; gap: 14px; }
+}
+</style>
+
+<div class="cookie-banner" id="cookieBanner">
+  <p class="cookie-banner__text">Мы используем cookie. Подробнее — в <a href="privacy.html" target="_blank">Политике конфиденциальности</a>.</p>
+  <button type="button" class="cookie-banner__btn" id="cookieAccept">Хорошо</button>
+</div>
+
+<script>
+(function(){
+  var KEY = 'dozari_cookie_ok';
+  var banner = document.getElementById('cookieBanner');
+  var btn = document.getElementById('cookieAccept');
+  if (!banner || !btn) return;
+  try {
+    if (!localStorage.getItem(KEY)) {
+      setTimeout(function(){ banner.classList.add('is-visible'); }, 700);
+    }
+  } catch(e) { banner.classList.add('is-visible'); }
+  btn.addEventListener('click', function(){
+    banner.classList.remove('is-visible');
+    try { localStorage.setItem(KEY, '1'); } catch(e) {}
+  });
+})();
+</script>
 
 </body>
 </html>
