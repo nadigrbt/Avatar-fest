@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>До зари 313 — блок «Декорации» (3 карточки)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Stalinist+One&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#0a0a0d; --text:#fff; --gold:#E8B87A; --gold2:#E8C9A0; }
+  * { box-sizing: border-box; }
+  html { color-scheme: dark; }
+  body { margin:0; font-family:"Ubuntu",sans-serif; background:var(--bg); color:var(--text); }
+
+  .variant { max-width: 1180px; margin: 0 auto; padding: 70px 24px 90px; }
+  .variant__badge { display:inline-block; font-family:"Ubuntu",sans-serif; font-weight:700; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:#241608; background:var(--gold); border-radius:50px; padding:6px 16px; margin-bottom:18px; }
+  .variant__title { font-family:"Stalinist One",sans-serif; font-weight:normal; font-size: clamp(24px,4vw,38px); line-height:1.3; margin:0 0 12px; max-width: 760px; }
+  .variant__desc { color: rgba(255,255,255,.62); font-size:14px; line-height:1.6; max-width:640px; margin:0 0 36px; }
+
+  .v1-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; }
+  .v1-item { position:relative; aspect-ratio: 4/5; border-radius:14px; overflow:hidden; }
+  .v1-item img { width:100%; height:100%; object-fit:cover; display:block; }
+  .v1-item::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,.85) 100%); }
+  .v1-cap { position:absolute; left:16px; right:16px; bottom:14px; z-index:2; }
+  .v1-cap__zone { font-family:"Ubuntu",sans-serif; font-weight:700; font-size:15px; color:var(--gold2); margin:0; }
+  .v1-cap__meta { font-size:12px; color:rgba(255,255,255,.65); margin:3px 0 0; }
+
+  @media (max-width: 720px) {
+    .v1-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+  <section class="variant">
+    <span class="variant__badge">Декорации</span>
+    <h2 class="variant__title">Полное погружение в мир декораций</h2>
+    <p class="variant__desc">Это не вечеринка с декором в углу — свет, диджей и пространство собраны в единый мир на одну ночь. Каждая зона выстроена так, чтобы в неё хотелось зайти, а не просто посмотреть со стороны. Каждый угол — готовый кадр для сторис.</p>
+    <div class="v1-grid">
+      <div class="v1-item"><img src="assets/decor-dj-1.jpg" alt=""><div class="v1-cap"><p class="v1-cap__zone">Диджей</p><p class="v1-cap__meta">Одно целое со светом</p></div></div>
+      <div class="v1-item"><img src="assets/decor-dance-1.jpg" alt=""><div class="v1-cap"><p class="v1-cap__zone">Танцпол</p><p class="v1-cap__meta">Свет в такт музыке</p></div></div>
+      <div class="v1-item"><img src="assets/decor-dj-2.jpg" alt=""><div class="v1-cap"><p class="v1-cap__zone">За пультом</p><p class="v1-cap__meta">Атмосфера крупным планом</p></div></div>
+    </div>
+  </section>
+
+</body>
+</html>
