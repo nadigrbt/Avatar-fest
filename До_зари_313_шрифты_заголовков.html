@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>До зари 313 — варианты шрифта заголовка</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&family=Stalinist+One&family=Cormorant+Garamond:wght@300;400;500&family=Prata&family=Oranienbaum&family=Playfair+Display:wght@400;600;700&family=Forum&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#0a0a0d; --text:#fff; --gold:#E8B87A; --gold2:#E8C9A0; }
+  * { box-sizing: border-box; }
+  html { color-scheme: dark; }
+  body { margin:0; font-family:"Ubuntu",sans-serif; background:var(--bg); color:var(--text); }
+
+  .intro { max-width: 860px; margin: 0 auto; padding: 60px 24px 10px; text-align:center; }
+  .intro__tag { font-family:"Ubuntu",sans-serif; letter-spacing:.28em; text-transform:uppercase; font-size:12px; color: var(--gold); margin:0 0 14px; }
+  .intro__title { font-family:"Ubuntu",sans-serif; font-weight:700; font-size: clamp(20px,3.4vw,30px); line-height:1.3; margin:0 0 12px; }
+
+  .variant { max-width: 980px; margin: 0 auto; padding: 56px 24px; border-top: 1px solid rgba(255,255,255,.08); }
+  .variant:first-of-type { border-top: none; }
+  .variant__badge { display:inline-block; font-family:"Ubuntu",sans-serif; font-weight:700; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:#241608; background:var(--gold); border-radius:50px; padding:6px 16px; margin-bottom:10px; }
+  .variant__meta { color: rgba(255,255,255,.45); font-size:12.5px; margin: 0 0 22px; }
+  .variant__badge--current { background: transparent; color: rgba(255,255,255,.85); border: 1px solid rgba(255,255,255,.4); }
+
+  .mock {
+    position: relative; border-radius: 18px; overflow: hidden;
+    padding: 64px 24px 48px; text-align:center;
+    background: #060607;
+  }
+  .mock::before {
+    content:""; position:absolute; inset:0;
+    background: url('assets/decor-dj-1.jpg') center 30% / cover;
+    opacity: 0.32; filter: saturate(1.1);
+  }
+  .mock::after {
+    content:""; position:absolute; inset:0;
+    background: linear-gradient(180deg, rgba(6,6,7,.55) 0%, rgba(6,6,7,.85) 60%, #060607 100%);
+  }
+  .mock__inner { position:relative; z-index:2; }
+  .mock__eyebrow { font-family:"Ubuntu",sans-serif; font-size:12px; letter-spacing:.24em; text-transform:uppercase; color: var(--gold2); margin:0 0 18px; }
+  .mock__title { line-height:1.05; margin:0 0 18px; color:#fff; }
+  .mock__title .num { color: var(--gold2); }
+  .mock__tagline { font-family:"Ubuntu",sans-serif; font-size:14px; color: rgba(255,255,255,.65); margin:0 0 22px; }
+  .mock__line { font-family:"Ubuntu",sans-serif; font-size:13px; color: rgba(255,255,255,.55); letter-spacing:.04em; }
+  .mock__line b { color:#fff; font-weight:700; }
+
+  /* per-font title sizing/family */
+  .f-current .mock__title { font-family:"Stalinist One", sans-serif; font-weight:normal; font-size: clamp(34px, 6.5vw, 62px); letter-spacing:.02em; }
+  .f-cormorant .mock__title { font-family:"Cormorant Garamond", serif; font-weight:400; font-size: clamp(48px, 9vw, 92px); letter-spacing:.01em; }
+  .f-prata .mock__title { font-family:"Prata", serif; font-weight:400; font-size: clamp(38px, 7vw, 68px); }
+  .f-oranienbaum .mock__title { font-family:"Oranienbaum", serif; font-weight:400; font-size: clamp(38px, 7vw, 68px); }
+  .f-playfair .mock__title { font-family:"Playfair Display", serif; font-weight:600; font-size: clamp(40px, 7.5vw, 74px); }
+  .f-forum .mock__title { font-family:"Forum", serif; font-weight:400; font-size: clamp(38px, 7vw, 68px); letter-spacing:.02em; }
+
+  /* дополнительные заголовки других блоков сайта — тем же кандидатом,
+     на обычном тёмном фоне (как на самом сайте), с неизменным текстом рядом */
+  .extra { padding: 30px 16px; text-align:center; border-top: 1px dashed rgba(255,255,255,.1); }
+  .extra__label { font-family:"Ubuntu",sans-serif; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color: rgba(255,255,255,.35); margin:0 0 12px; }
+  .extra__heading { font-weight:400; text-transform:uppercase; color:#E8C9A0; letter-spacing:.035em; line-height:1.25; margin:0 0 12px; font-size: clamp(22px, 4.6vw, 34px); }
+  .extra__body { font-family:"Ubuntu",sans-serif; font-size:14px; line-height:1.6; color:rgba(255,255,255,.62); max-width:560px; margin:0 auto; }
+  .extra__unchanged-tag { display:inline-block; font-family:"Ubuntu",sans-serif; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color: rgba(255,255,255,.35); border:1px solid rgba(255,255,255,.18); border-radius:50px; padding:3px 10px; margin-top:14px; }
+
+  .f-current .extra__heading { font-family:"Stalinist One", sans-serif; }
+  .f-cormorant .extra__heading { font-family:"Cormorant Garamond", serif; }
+  .f-prata .extra__heading { font-family:"Prata", serif; }
+  .f-oranienbaum .extra__heading { font-family:"Oranienbaum", serif; }
+  .f-playfair .extra__heading { font-family:"Playfair Display", serif; font-weight:600; }
+  .f-forum .extra__heading { font-family:"Forum", serif; }
+
+</style>
+</head>
+<body>
+
+  <div class="intro">
+    <p class="intro__tag">До зари 313 · черновой макет</p>
+    <h1 class="intro__title">Варианты шрифта заголовка</h1>
+  </div>
+
+  <section class="variant f-current">
+    <span class="variant__badge variant__badge--current">Сейчас на сайте · Stalinist One</span>
+    <p class="variant__meta">Текущий шрифт заголовков — для сравнения с кандидатами ниже</p>
+    <div class="mock">
+      <div class="mock__inner">
+        <p class="mock__eyebrow">Серия иммерсивных вечеринок</p>
+        <h2 class="mock__title">До зари <span class="num">313</span></h2>
+        <p class="mock__tagline">Танцпол и музыка для тех, кто ценит атмосферу и детали</p>
+        <p class="mock__line"><b>3 октября</b> · Вход от 5 500 ₽</p>
+      </div>
+    </div>
+
+    <div class="extra">
+      <p class="extra__label">Заголовок блока «Что вас ждёт»</p>
+      <h3 class="extra__heading">Эта ночь создана для вас</h3>
+      <p class="extra__body">Не просто вечеринка — целая история.<br>От сумерек до первого света. 313 гостей. Один выпуск.</p>
+      <span class="extra__unchanged-tag">текст ниже не меняется — Ubuntu</span>
+    </div>
+
+    <div class="extra">
+      <p class="extra__label">Заголовок блока «Программа ночи»</p>
+      <h3 class="extra__heading">Путь до зари</h3>
+      <p class="extra__body">От сумерек до первого света, через музыку, свет и декорации.</p>
+    </div>
+
+    <div class="extra">
+      <p class="extra__label">Заголовок блока «Галерея»</p>
+      <h3 class="extra__heading">Как это было в июле</h3>
+    </div>
+  </section>
+
+  <section class="variant f-cormorant">
+    <span class="variant__badge">1 · Cormorant Garamond</span>
+    <p class="variant__meta">Light/Regular · тонкая премиальная антиква</p>
+    <div class="mock">
+      <div class="mock__inner">
+        <p class="mock__eyebrow">Серия иммерсивных вечеринок</p>
+        <h2 class="mock__title">До зари <span class="num">313</span></h2>
+        <p class="mock__tagline">Танцпол и музыка для тех, кто ценит атмосферу и детали</p>
+        <p class="mock__line"><b>3 октября</b> · Вход от 5 500 ₽</p>
+      </div>
+    </div>
+
+    <div class="extra">
+      <p class="extra__label">Заголовок блока «Что вас ждёт»</p>
+      <h3 class="extra__heading">Эта ночь создана для вас</h3>
+      <p class="extra__body">Не просто вечеринка — целая история.<br>От сумерек до первого света. 313 гостей. Один выпуск.</p>
+      <span class="extra__unchanged-tag">текст ниже не меняется — Ubuntu</span>
+    </div>
+
+    <div class="extra">
+      <p class="extra__label">Заголовок блока «Программа ночи»</p>
+      <h3 class="extra__heading">Путь до зари</h3>
+      <p class="extra__body">От сумерек до первого света, через музыку, свет и декорации.</p>
+    </div>
+
+    <div class="extra">
+      <p class="extra__label">Заголовок блока «Галерея»</p>
+      <h3 class="extra__heading">Как это было в июле</h3>
+    </div>
+  </section>
+
+  <section class="variant f-prata">
+    <span class="variant__badge">2 · Prata</span>
+    <p class="variant__meta">Более жёсткий и статусный, чуть менее воздушный</p>
+    <div class="mock">
+      <div class="mock__inner">
+        <p class="mock__eyebrow">Серия иммерсивных вечеринок</p>
+        <h2 class="mock__title">До зари <span class="num">313</span></h2>
+        <p class="mock__tagline">Танцпол и музыка для тех, кто ценит атмосферу и детали</p>
+        <p class="mock__line"><b>3 октября</b> · Вход от 5 500 ₽</p>
+      </div>
+    </div>
+
+    <div class="extra">
+      <p class="extra__label">Заголовок блока «Что вас ждёт»</p>
+      <h3 class="extra__heading">Эта ночь создана для вас</h3>
+      <p class="extra__body">Не просто вечеринка — целая история.<br>От сумерек до первого света. 313 гостей. Один выпуск.</p>
+      <span class="extra__unchanged-tag">текст ниже не меняется — Ubuntu</span>
+    </div>
+
+    <div class="extra">
+      <p class="extra__label">Заголовок блока «Программа ночи»</p>
+      <h3 class="extra__heading">Путь до зари</h3>
+      <p class="extra__body">От сумерек до первого света, через музыку, свет и декорации.</p>
+    </div>
+
+    <div class="extra">
+      <p class="extra__label">Заголовок блока «Галерея»</p>
+      <h3 class="extra__heading">Как это было в июле</h3>
+    </div>
+  </section>
+
+  <section class="variant f-oranienbaum">
+    <span class="variant__badge">3 · Oranienbaum</span>
+    <p class="variant__meta">Классический, более театральный характер</p>
+    <div class="mock">
+      <div class="mock__inner">
+        <p class="mock__eyebrow">Серия иммерсивных вечеринок</p>
+        <h2 class="mock__title">До зари <span class="num">313</span></h2>
+        <p class="mock__tagline">Танцпол и музыка для тех, кто ценит атмосферу и детали</p>
+        <p class="mock__line"><b>3 октября</b> · Вход от 5 500 ₽</p>
+      </div>
+    </div>
+
+    <div class="extra">
+      <p class="extra__label">Заголовок блока «Что вас ждёт»</p>
+      <h3 class="extra__heading">Эта ночь создана для вас</h3>
+      <p class="extra__body">Не просто вечеринка — целая история.<br>От сумерек до первого света. 313 гостей. Один выпуск.</p>
+      <span class="extra__unchanged-tag">текст ниже не меняется — Ubuntu</span>
+    </div>
+
+    <div class="extra">
+      <p class="extra__label">Заголовок блока «Программа ночи»</p>
+      <h3 class="extra__heading">Путь до зари</h3>
+      <p class="extra__body">От сумерек до первого света, через музыку, свет и декорации.</p>
+    </div>
+
+    <div class="extra">
+      <p class="extra__label">Заголовок блока «Галерея»</p>
+      <h3 class="extra__heading">Как это было в июле</h3>
+    </div>
+  </section>
+
+  <section class="variant f-playfair">
+    <span class="variant__badge">4 · Playfair Display (замена Didot/Bodoni)</span>
+    <p class="variant__meta">Максимально fashion/premium направление, с кириллицей</p>
+    <div class="mock">
+      <div class="mock__inner">
+        <p class="mock__eyebrow">Серия иммерсивных вечеринок</p>
+        <h2 class="mock__title">До зари <span class="num">313</span></h2>
+        <p class="mock__tagline">Танцпол и музыка для тех, кто ценит атмосферу и детали</p>
+        <p class="mock__line"><b>3 октября</b> · Вход от 5 500 ₽</p>
+      </div>
+    </div>
+
+    <div class="extra">
+      <p class="extra__label">Заголовок блока «Что вас ждёт»</p>
+      <h3 class="extra__heading">Эта ночь создана для вас</h3>
+      <p class="extra__body">Не просто вечеринка — целая история.<br>От сумерек до первого света. 313 гостей. Один выпуск.</p>
+      <span class="extra__unchanged-tag">текст ниже не меняется — Ubuntu</span>
+    </div>
+
+    <div class="extra">
+      <p class="extra__label">Заголовок блока «Программа ночи»</p>
+      <h3 class="extra__heading">Путь до зари</h3>
+      <p class="extra__body">От сумерек до первого света, через музыку, свет и декорации.</p>
+    </div>
+
+    <div class="extra">
+      <p class="extra__label">Заголовок блока «Галерея»</p>
+      <h3 class="extra__heading">Как это было в июле</h3>
+    </div>
+  </section>
+
+  <section class="variant f-forum">
+    <span class="variant__badge">5 · Forum</span>
+    <p class="variant__meta">Более мистический и архитектурный характер</p>
+    <div class="mock">
+      <div class="mock__inner">
+        <p class="mock__eyebrow">Серия иммерсивных вечеринок</p>
+        <h2 class="mock__title">До зари <span class="num">313</span></h2>
+        <p class="mock__tagline">Танцпол и музыка для тех, кто ценит атмосферу и детали</p>
+        <p class="mock__line"><b>3 октября</b> · Вход от 5 500 ₽</p>
+      </div>
+    </div>
+
+    <div class="extra">
+      <p class="extra__label">Заголовок блока «Что вас ждёт»</p>
+      <h3 class="extra__heading">Эта ночь создана для вас</h3>
+      <p class="extra__body">Не просто вечеринка — целая история.<br>От сумерек до первого света. 313 гостей. Один выпуск.</p>
+      <span class="extra__unchanged-tag">текст ниже не меняется — Ubuntu</span>
+    </div>
+
+    <div class="extra">
+      <p class="extra__label">Заголовок блока «Программа ночи»</p>
+      <h3 class="extra__heading">Путь до зари</h3>
+      <p class="extra__body">От сумерек до первого света, через музыку, свет и декорации.</p>
+    </div>
+
+    <div class="extra">
+      <p class="extra__label">Заголовок блока «Галерея»</p>
+      <h3 class="extra__heading">Как это было в июле</h3>
+    </div>
+  </section>
+
+</body>
+</html>
